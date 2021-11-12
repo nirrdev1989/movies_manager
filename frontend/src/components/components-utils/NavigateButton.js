@@ -1,14 +1,14 @@
 import React from 'react'
 import { withRouter } from 'react-router'
 import { Link, Switch, Route, useRouteMatch } from 'react-router-dom'
+import { ButtonS } from '../../styles/Button'
 
-function NavigateButton({ url, content, history, styles }) {
+function NavigateButton({ url, content, bg, history, styles, ...rest }) {
    function handleNavigate(p) {
       history.push(p)
    }
-   // console.log(history.location.pathname, 'URL: ', url)
 
-   return <button disabled={history.location.pathname === url} type="button" style={styles} onClick={() => handleNavigate(url)}>{content}</button>
+   return <ButtonS {...rest} bg={bg} disabled={history.location.pathname === url} type="button" onClick={() => handleNavigate(url)}>{content}</ButtonS>
 }
 
 export default withRouter(NavigateButton)

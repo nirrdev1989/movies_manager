@@ -1,39 +1,39 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import useForm from '../hooks/useForm'
+import { FormControlS } from '../styles/FormControl'
+import { FromWrapperS } from '../styles/FormWrapper'
+import Button from './components-utils/Button'
 
-export default function AuthForm({ isRegisterForm }) {
+export default function AuthForm({ isRegisterForm, history }) {
    console.log('IS REGISTER FORM: ', isRegisterForm)
 
-   const [values, setValues] = React.useState({
+   const { state, onChange, onSubmit } = useForm({
       userName: '',
       password: ''
-   })
+   }, callback)
 
-   function handleChange(event) {
-      const { name, value } = event.target
-      setValues((prev) => { return { ...prev, [name]: value } })
-   }
-
-   function handleSubmit(event) {
-      event.preventDefault()
-
+   function callback(values) {
       console.log(values)
    }
 
    return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
-         <div style={{ width: '300px', height: '400px' }}>
-            <h3 style={{ textAlign: 'center' }} >{isRegisterForm ? "Register" : 'Login'}</h3>
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+      <FromWrapperS>
+         <h4 style={{ marginBottom: '1rem' }}>{isRegisterForm ? "Register" : 'Login'}</h4>
+         <form onSubmit={onSubmit} style={{ width: '300px', height: '200px' }}>
+            <FormControlS className="form_control">
                <label>User Name</label>
-               <input type="text" name="userName" onChange={handleChange} value={values.userName} />
+               <input type="text" name="userName" onChange={onChange} value={state.userName} />
+            </FormControlS>
+            <FormControlS className="form_control">
                <label>Password</label>
-               <input type="password" name="password" onChange={handleChange} value={values.password} />
-               <button style={{ marginTop: '1rem', marginBottom: '1rem' }} type="submit">{isRegisterForm ? 'Register' : 'Login'}</button>
-            </form>
-
-            {isRegisterForm ? <Link to="/" >Login</Link> : <Link to="/register" >Create Account</Link>}
-         </div>
-      </div>
+               <input type="password" name="password" onChange={onChange} value={state.password} />
+            </FormControlS>
+            <div style={{ marginTop: '1rem' }}>
+               <Button type="submit" bg="rgb(34, 238, 170)" content={isRegisterForm ? 'Register' : 'Login'} />
+            </div>
+         </form>
+         {isRegisterForm ? <Link to="/" >Login</Link> : <Link to="/register" >Create Account</Link>}
+      </FromWrapperS>
    )
 }
