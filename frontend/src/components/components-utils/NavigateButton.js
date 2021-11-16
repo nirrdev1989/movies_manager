@@ -7,8 +7,15 @@ function NavigateButton({ url, content, bg, history, styles, ...rest }) {
    function handleNavigate(p) {
       history.push(p)
    }
-
-   return <ButtonS {...rest} bg={bg} disabled={history.location.pathname === url} type="button" onClick={() => handleNavigate(url)}>{content}</ButtonS>
+   return (
+      <ButtonS
+         {...rest}
+         bg={bg}
+         disabled={history.location.pathname === url}
+         type="button"
+         onClick={() => handleNavigate(url)}>{content}
+      </ButtonS>
+   )
 }
 
 export default withRouter(NavigateButton)

@@ -1,7 +1,7 @@
 import React from 'react'
-import { FormControlS } from '../styles/FormControl'
-import { FromWrapperS } from '../styles/FormWrapper'
-import Button from './components-utils/Button'
+import { FormControlS } from '../../styles/FormControl'
+import { FromWrapperS } from '../../styles/FormWrapper'
+import Button from '../components-utils/Button'
 // import { authForm, validators } from "./forms.config";
 // import { useForm } from 'react-hook-form';
 // import Input from './components/Input';
@@ -96,20 +96,6 @@ export default function Form({ formConfig }) {
 
    return (
       <div className="App">
-
-         {/* <FromWrapperS> */}
-         {/* <h4 style={{ marginBottom: '1rem' }}>{isRegisterForm ? "Register" : 'Login'}</h4> */}
-         {/* <form onSubmit={onSubmit} style={{ width: formConfig.width, height: formConfig.height }}>
-            <FormControlS className="form_control">
-               <label>User Name</label>
-               <input type="text" name="userName" onChange={onChange} value={state.userName} />
-            </FormControlS>
-            <FormControlS className="form_control">
-               <label>Password</label>
-               <input type="password" name="password" onChange={onChange} value={state.password} />
-            </FormControlS>
-         </form> */}
-         {/* {isRegisterForm ? <Link to="/" >Login</Link> : <Link to="/register" >Create Account</Link>} */}
          <FromWrapperS>
             <form style={{ width: formConfig.width, height: formConfig.height }} onSubmit={handleSubmit}>
                {handleForm(formConfig.inputs)}

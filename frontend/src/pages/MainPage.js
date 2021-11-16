@@ -1,47 +1,49 @@
-import React from 'react'
-import { useRouteMatch, withRouter } from 'react-router-dom'
+
+import { useRouteMatch } from 'react-router-dom'
 import NavigateButton from '../components/components-utils/NavigateButton'
 import styled from 'styled-components'
-import { RenderRoutes } from '../App'
+import { RenderRoutes } from '../router/Routes'
+import Button from '../components/components-utils/Button'
+import { connect } from 'react-redux'
+import { logoutActionStart } from '../redux/auth/actions'
 
 
-function MainPage({ childrenRoutes }) {
-   const { url, path } = useRouteMatch()
-
-   // let url = '/main'
-   // let path = '/main'
-   // console.log(childrenRoutes)
-
-
+function MainPage({ childrenRoutes, logout }) {
+   const { url } = useRouteMatch()
+   console.log(url)
    return (
       <>
-         <Container>
+         <NavContainer>
             <Navbar>
                <NavbarLeft>
                   <NavigateButton url={`${url}/users/all`} content="Users Mange" />
                   <NavigateButton url={`${url}/movies/all`} content="Movies" />
-                  <NavigateButton url={`${url}/subscriptions`} content="Subscriptions" />
+                  <NavigateButton url={`${url}/subscriptions/all`} content="Subscriptions" />
                </NavbarLeft>
                <NavbarRight>
-                  <NavigateButton style={{ width: '100px' }} url={`/`} content="Logout" />
+                  <Button style={{ width: '100px' }} handler={() => logout()} bg={"whitesmoke"} content="Logout" />
                </NavbarRight>
             </Navbar>
             <hr />
-         </Container>
+         </NavContainer>
+
          <div style={{ margin: '3rem' }} >
-            {/* {childrenRoutes.map((route) => {
-               return renderRoutes(route)
-            })} */}
             <RenderRoutes routes={childrenRoutes} />
          </div>
       </>
    )
 }
 
-export default withRouter(MainPage)
+function mapDispatchToProps(dispatch) {
+   return {
+      logout: () => dispatch(logoutActionStart())
+   }
+}
+
+export default connect(null, mapDispatchToProps)(MainPage)
 
 
-const Container = styled.div`
+const NavContainer = styled.div`
    margin: 3rem;
 `
 

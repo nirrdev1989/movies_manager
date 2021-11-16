@@ -1,5 +1,6 @@
 body {
   padding: 0;
+  background-color: linear-gradient(#e66465, #9198e5);
   box-sizing: border-box;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -15,4 +16,10 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+input[type="search"] {
+
+  background-color : transparent; 
+
 }

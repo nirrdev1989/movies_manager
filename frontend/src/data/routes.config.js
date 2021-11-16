@@ -1,13 +1,16 @@
-import MoviesList from "../components/MoviesList";
-import UsersList from "../components/UsersList";
-import EditMoviePage from "../pages/EditMoviePage";
-import EditUserPage from "../pages/EditUserPage";
+import MoviesList from "../components/Movies/MoviesList";
+import UsersList from "../components/Users/UsersList";
 import HomePage from "../pages/HomePage";
 import MainPage from "../pages/MainPage";
 import MoviesPage from "../pages/MoviesPage";
 import NotFound from "../pages/NotFound";
 import UsersMangePage from "../pages/UsersMangePage";
-
+import Loader from "../components/Loader/Loader";
+import SubscriptionsPage from "../pages/SubscriptionsPage";
+import MembersList from "../components/Members/MembersList";
+import { lazy } from "react";
+import EditSubPage from "../pages/EditSubPage";
+// import Ex from "../pages/Ex";
 // component: lazy(() => import('../pages/HomePage')),
 
 
@@ -17,15 +20,24 @@ export const routesConfig = [
       path: '/',
       exact: true,
       redirect: '/home',
-      fallback: <div> Loading... </div>
+      private: false,
+      fallback: <Loader />
    },
+   // {
+   //    key: '/ex',
+   //    path: '/ex',
+   //    exact: true,
+   //    private: false,
+   //    component: lazy(() => import('../pages/Ex')),
+   //    fallback: <Loader />
+   // },
    {
       key: 'HOME',
       path: '/home',
       component: HomePage,
       exact: true,
       private: false,
-      fallback: <div> Loading... </div>,
+      fallback: <Loader />,
       children: []
    },
    {
@@ -34,16 +46,16 @@ export const routesConfig = [
       component: HomePage,
       exact: true,
       private: false,
-      fallback: <div> Loading... </div>,
+      fallback: <Loader />,
       children: []
    },
    {
       key: 'MAIN',
       path: '/main',
       component: MainPage,
-      private: false,
+      private: true,
       exact: false,
-      fallback: <div> Loading... </div>,
+      fallback: <Loader />,
       children: [
          {
             key: 'MAIN_USERS',
@@ -52,7 +64,7 @@ export const routesConfig = [
             component: UsersMangePage,
             private: true,
             exact: false,
-            fallback: <div> Loading... </div>,
+            fallback: <Loader />,
             children: [
                {
                   key: 'MAIN_USERS_ALL',
@@ -60,23 +72,23 @@ export const routesConfig = [
                   component: UsersList,
                   private: true,
                   exact: false,
-                  fallback: <div> Loading... </div>,
+                  fallback: <Loader />,
                },
                {
                   key: 'MAIN_USERS_EDIT_USER',
                   path: '/main/users/edit_user/:id',
-                  component: EditUserPage,
+                  component: EditSubPage,
                   private: true,
                   exact: true,
-                  fallback: <div> Loading... </div>,
+                  fallback: <Loader />,
                },
                {
                   key: 'MAIN_USERS_ADD_USER',
                   path: '/main/users/add_user',
-                  component: EditUserPage,
+                  component: EditSubPage,
                   private: true,
                   exact: true,
-                  fallback: <div> Loading... </div>,
+                  fallback: <Loader />,
                }
             ]
          },
@@ -87,45 +99,71 @@ export const routesConfig = [
             component: MoviesPage,
             private: true,
             exact: false,
-            fallback: <div> Loading... </div>,
+            fallback: <Loader />,
             children: [
                {
-                  // /main'}/movies/all
                   key: 'MAIN_MOVIES_ALL',
                   path: '/main/movies/all',
                   component: MoviesList,
                   private: true,
                   exact: false,
-                  fallback: <div> Loading... </div>,
+                  fallback: <Loader />,
                },
                {
                   key: 'MAIN_USERS_EDIT_MOVIE',
                   path: '/main/movies/edit_movie/:id',
-                  component: EditMoviePage,
+                  component: EditSubPage,
                   private: true,
                   exact: false,
-                  fallback: <div> Loading... </div>,
+                  fallback: <Loader />,
                },
                {
                   key: 'MAIN_USERS_ADD_MOVIE',
                   path: '/main/movies/add_movie',
-                  component: EditMoviePage,
+                  component: EditSubPage,
                   private: true,
                   exact: false,
-                  fallback: <div> Loading... </div>,
+                  fallback: <Loader />,
+               }
+            ]
+         },
+         {
+            key: 'MAIN_SUBS',
+            path: '/main/subscriptions',
+            // redirect: '/main/users/all',
+            component: SubscriptionsPage,
+            private: true,
+            exact: false,
+            fallback: <Loader />,
+            children: [
+               {
+                  key: 'MAIN_MEMBERS_ALL',
+                  path: '/main/subscriptions/all',
+                  component: MembersList,
+                  private: true,
+                  exact: false,
+                  fallback: <Loader />,
+               },
+               {
+                  key: 'MAIN_MEMBERS_EDIT_MEMBER',
+                  path: '/main/subscriptions/edit_member/:id',
+                  component: EditSubPage,
+                  private: true,
+                  exact: false,
+                  fallback: <Loader />,
+               },
+               {
+                  key: 'MAIN_MEMBERS_ADD_MEMBERS',
+                  path: '/main/subscriptions/add_member',
+                  component: EditSubPage,
+                  private: true,
+                  exact: false,
+                  fallback: <Loader />,
                }
             ]
          }
       ]
-
    },
-   // {
-   //   path: '/protected',
-   //   component: lazy(() => import('../components/Protected')),
-   //   exact: false,
-   //   private: true,
-   //   fallback: <div> Loading... </div>
-   // }
    {
       key: 'NOT_FOUND',
       path: '*',

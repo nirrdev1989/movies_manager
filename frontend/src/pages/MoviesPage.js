@@ -1,18 +1,21 @@
 import React from 'react'
-import { useRouteMatch, withRouter } from 'react-router'
+import { useHistory, useRouteMatch, withRouter } from 'react-router'
 import NavigateButton from '../components/components-utils/NavigateButton'
 import styled from 'styled-components'
-import { FormControlS } from '../styles/FormControl'
 import { searchIcon } from '../icons'
-import { RenderRoutes } from '../App'
+import { RenderRoutes } from '../router/Routes'
 
-function MoviesPage({ childrenRoutes, history }) {
-   const { url, path } = useRouteMatch()
-
-   console.log('MOVIES PAGE RENDER')
+function MoviesPage({ childrenRoutes }) {
+   const { url } = useRouteMatch()
+   const history = useHistory()
 
    const [renderNav, setRenderNav] = React.useState(true)
-   // console.log('UsersMangePage PAGE RENDER', url, history.location.pathname)
+
+   function onSerach(key, value) {
+      if (key === 13) {
+         history.push(`/main/movies/all/search?${value}`)
+      }
+   }
 
    React.useEffect(() => {
       let pathName = history.location.pathname
@@ -32,22 +35,22 @@ function MoviesPage({ childrenRoutes, history }) {
                <NavbarLeft>
                   <NavigateButton content="All Movies" url={`${url}/all`} />
                   <NavigateButton style={{ marginRight: '3rem' }} content="Add Movie" url={`${url}/add_movie`} />
-                  <SearchInput >
-                     {searchIcon}  <input type="search" />
+                  <SearchInput>
+                     {searchIcon}  <input type="search" onKeyDown={(e) => onSerach(e.keyCode, e.target.value)} />
                   </SearchInput>
                </NavbarLeft>
                <NavbarRight>
                </NavbarRight>
             </Navbar>
          }
-
          <RenderRoutes routes={childrenRoutes} />
       </div>
    )
 }
 
 
-export default withRouter(MoviesPage)
+export default MoviesPage
+
 const Navbar = styled.div`
    width: 100%;
    display: flex;
@@ -72,6 +75,7 @@ const SearchInput = styled.div`
    display: flex;
    align-items: center;
    border-bottom: 2px solid black;
+   background-color: none;
    > input {
       border: none;
    }

@@ -1,18 +1,16 @@
 import React from 'react'
 import NavigateButton from '../components/components-utils/NavigateButton'
-import { Link, Switch, Route, useRouteMatch, withRouter, Redirect } from 'react-router-dom'
-import UsersList from '../components/UsersList'
-import EditUserPage from './EditUserPage'
+import { useRouteMatch, withRouter, useHistory } from 'react-router-dom'
 import styled from 'styled-components'
-import { RenderRoutes } from '../App'
-// import history from '../hooks/router.history'
+import { RenderRoutes } from '../router/Routes'
 
-function UsersMangePage({ childrenRoutes, history }) {
-   // console.log(history)
-   const { url, path } = useRouteMatch()
+
+function UsersMangePage({ childrenRoutes }) {
+   const { url } = useRouteMatch()
+   const history = useHistory()
+
    const [renderNav, setRenderNav] = React.useState(true)
 
-   console.log(childrenRoutes)
    React.useEffect(() => {
       let pathName = history.location.pathname
 
@@ -32,12 +30,7 @@ function UsersMangePage({ childrenRoutes, history }) {
                <NavigateButton content="Add User" url={`${url}/add_user`} />
             </Navbar>
          }
-
-         {/* {childrenRoutes.map((route) => {
-            return renderRoutes(route)
-         })} */}
          <RenderRoutes routes={childrenRoutes} />
-
       </div>
    )
 }

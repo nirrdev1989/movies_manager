@@ -1,78 +1,40 @@
-import { BrowserRouter, Switch, Route, useRouteMatch, useHistory, Redirect, withRouter } from 'react-router-dom';
-import { Suspense } from "react";
-import HomePage from './pages/HomePage';
-import MainPage from './pages/MainPage';
-import MoviesPage from './pages/MoviesPage';
-import NotFound from './pages/NotFound';
-import UsersMangePage from './pages/UsersMangePage';
-import history from './hooks/router.history'
-import UsersList from './components/UsersList';
-import EditUserPage from './pages/EditUserPage';
-import SubscriptionsPage from './pages/SubscriptionsPage';
-import MoviesList from './components/MoviesList';
-import EditMovieForm from './components/EditMovieForm';
-import EditMoviePage from './pages/EditMoviePage';
+import React, { useEffect } from 'react'
+import { BrowserRouter } from 'react-router-dom';
 import { routesConfig } from './data/routes.config';
+import { connect } from 'react-redux';
+import { authUserLoginStart } from './redux/auth/actions';
+import { ToastContainer } from 'react-toastify';
+import { RenderRoutes } from './router/Routes';
+import Navbar from './components/Navbar/Navbar';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
 
-function RouteWithSubRoutes(route) {
-   /** Authenticated flag */
-   const authenticated = true;
-   console.log(route)
-   return (
-      <Suspense fallback={route.fallback}>
-
-         {/* <Route path={route.path}>
-              
-         </Route> */}
-         <Route
-            path={route.path}
-            render={(props) =>
-               route.redirect ? <Redirect to={route.redirect} exact={route.exact} /> :
-                  route.private ? (
-                     authenticated ? route.component &&
-                        <route.component {...props} childrenRoutes={route.children} /> : <Redirect to='/' />
-                  ) : route.component && <route.component {...props} childrenRoutes={route.children} />
-            }
-         />
-      </Suspense>
-   );
-};
-
-
-
-
-export function RenderRoutes({ routes }) {
-   console.log(routes)
-   return (
-      <Switch>
-         {routes.map((route) => {
-            return (
-               <RouteWithSubRoutes key={route.key} {...route} />
-            )
-         })}
-      </Switch>
-   )
-}
-
-
-function App() {
-   // console.log('APP COMPONENT: ', history)
+function App({ authUserLogin }) {
+   useEffect(() => {
+      authUserLogin()
+   }, [])
 
    return (
-      <div >
-         <BrowserRouter>
-            {/* <Switch> */}
-            <RenderRoutes routes={routesConfig} />
-            {/* <Route path="*" component={NotFound} /> */}
-            {/* </Switch> */}
-         </BrowserRouter>
+      <div className="app_container">
+         <ToastContainer />
+         <Navbar />
+         <div >
+            <BrowserRouter>
+               <RenderRoutes routes={routesConfig} />
+            </BrowserRouter>
+         </div>
       </div>
    );
 }
 
-export default App;
+function mapDispatchToProps(dispatch) {
+   return {
+      authUserLogin: () => dispatch(authUserLoginStart())
+   }
+}
+
+export default connect(null, mapDispatchToProps)(App);
 
 
 // <Route path="/" exact={true} component={HomePage} />
@@ -87,8 +49,7 @@ export default App;
 //          <Route path={`${'/main/users'}/edit_user/:id`} exact render={() => <EditUserPage />} />
 //          <Route path={`${'/main/users'}/add_user`} exact render={() => <EditUserPage />} />
 //       </Route>
-
-//       <Route path={`${'/main'}/movies`}  >
+//       <Route path={`${'/main'}/movies`}>
 //          <MoviesPage />
 //          <Redirect from={`${'/main'}/movies`} to={`${'/main/movies'}/all`} exact />
 //          <Route path={`${'/main'}/movies/all`} render={() => <MoviesList />} />

@@ -63,7 +63,7 @@ export const users = [
    }
 ]
 
-export const premmisions = [
+export const premissions = [
    'view movies', 'edit movies', 'add movies', 'delete movies',
    'view subs', 'edit subs', 'add subs', 'delete subs'
 ]
