@@ -38,7 +38,7 @@ export function deleteMovieAction(id) {
          const result = await httpCall.delete('http://localhost:6789/api/movies/delete/' + id)
 
          console.log(result.data)
-
+         successToast(result.data.message)
          dispatch({
             type: MOVIES_ACTIONS_TYPES.DELETE_MOVIE_SUCCESS,
             payload: id

@@ -14,8 +14,8 @@ function MoviesList({ loading, getMovies, movies, deleteMovie }) {
    }
 
    React.useEffect(() => {
+      getMovies()
       if (!movies.length) {
-         getMovies()
       }
    }, [])
    console.log(history)

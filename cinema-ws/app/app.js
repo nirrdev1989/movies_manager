@@ -17,10 +17,13 @@ app.use(cors({
 
 app.use((request, response, next) => {
    console.log(`
+   CINEMA SERVER
    URL: ${request.url}
    METHOD: ${request.method}
    TIME: ${new Date().toLocaleDateString()}`)
-
+   request.serverData = {
+      serverName: 'CINEMA'
+   }
    next()
 })
 

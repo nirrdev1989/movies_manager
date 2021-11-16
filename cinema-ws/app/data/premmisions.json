@@ -1,0 +1,11 @@
+{
+   "premissions": {
+      "6193bd5b3f61393d517832db": {
+         "_id": "6193bd5b3f61393d517832db",
+         "premissions": [
+            "view movies",
+            "edit movies"
+         ]
+      }
+   }
+}

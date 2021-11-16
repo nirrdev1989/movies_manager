@@ -13,8 +13,8 @@ function UsersList({ loading, getUsers, users, deleteUser }) {
    }
 
    React.useEffect(() => {
+      getUsers()
       if (!users.length) {
-         getUsers()
       }
    }, [])
 

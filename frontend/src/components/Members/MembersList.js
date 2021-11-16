@@ -13,15 +13,15 @@ function MembersList({ loading, movies, getMembers, members, deleteMember, getMo
    }
 
    React.useEffect(() => {
+      getMembers()
+      // getMovies()
       if (!members.length) {
-         getMembers()
       }
       if (!movies.length) {
-         getMovies()
       }
 
       console.log(movies)
-   }, [movies])
+   }, [])
 
    return (
       <Container>

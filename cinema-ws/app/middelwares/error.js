@@ -6,6 +6,11 @@ exports.handelError = function (error, request, response, next) {
    if (error.code === 11000) {
       error.message = `${Object.keys(error.keyPattern)[0]}  all ready exsist `
    }
+
+   if (error.response) {
+      error.message = error.response.data.message
+
+   }
    if (process.env.NODE_ENV === 'production') {
       if (error.name === 'CastError' || error.name === 'ValidationError') {
          error.message = 'Invalid Prop'

@@ -1,4 +1,4 @@
-const { getAll, createOne, deleteOne, updateOne } = require("../data.access.logic/db/factory")
+const { getAll, createOne, deleteOne, updateOne } = require("../../../cinema-ws/app/data.access.logic/db/factory")
 const { MovieModel } = require("../db/models/movies")
 
 

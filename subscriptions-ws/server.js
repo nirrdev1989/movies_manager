@@ -1,55 +1,24 @@
-// const { readFile } = require('jsonfile')
-const app = require('./server/app')
-// const { wirteFile } = require('./server/data.access.logic/json.file')
-const { connectMongoDB } = require('./server/db/db')
-const { SubscriptionModel } = require('./server/db/models/subs')
-const PORT = process.env.PORT || 6789
-connectMongoDB()
+const app = require('./app/app')
+const { connectMongoDB } = require('../cinema-ws/app/db/db')
+const PORT = process.env.PORT || 7799
+connectMongoDB('mongodb://127.0.0.1:27017/movies_manager_cinema_subscriptions')
 
+// const { SubscriptionModel } = require('./app/db/models/subs')
 
-async function check() {
+// async function check() {
 
-   const x = await SubscriptionModel.find({}).populate('memberId')
-   console.log(x[0].movies)
-}
+//    const x = await SubscriptionModel.find({}).populate('memberId')
+//    console.log(x[0].movies)
+// }
 // check()
 
 app.listen(PORT, () => console.log(`Server run at port: ${PORT}`))
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // const Axios = require('axios')
-// const { MovieModel } = require('./server/db/models/movies')
-// const { MemberModel } = require('./server/db/models/members')
+// const { MovieModel } = require('./app/db/models/movies')
+// const { MemberModel } = require('./app/db/models/members')
 
 
 // async function setMembers() {
@@ -98,4 +67,3 @@ app.listen(PORT, () => console.log(`Server run at port: ${PORT}`))
 
 // setMembers()
 // setMovies()
-
