@@ -10,7 +10,7 @@ import { logoutActionStart } from '../redux/auth/actions'
 
 function MainPage({ childrenRoutes, logout }) {
    const { url } = useRouteMatch()
-   console.log(url)
+
    return (
       <>
          <NavContainer>

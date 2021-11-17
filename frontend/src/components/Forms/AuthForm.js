@@ -14,15 +14,13 @@ function AuthForm({ isRegisterForm, login, globalLoader, isAuth, register }) {
    }, callback)
 
    function callback(values) {
-      console.log(values)
       if (isRegisterForm) {
          register(values)
       } else {
          login(values)
       }
-
    }
-   console.log('GLOBAL LOADER: ', globalLoader)
+
    if (isAuth) {
       return <Redirect to="/main" />
    }

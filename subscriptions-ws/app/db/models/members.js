@@ -18,4 +18,10 @@ const MemberSchema = new mongoose.Schema({
 
 const MemberModel = mongoose.model('members', MemberSchema)
 
+MemberSchema.virtual('subscriptions', {
+   ref: 'subscriptions',
+   localField: '_id',
+   foreignField: 'members'
+});
+
 module.exports = { MemberModel }

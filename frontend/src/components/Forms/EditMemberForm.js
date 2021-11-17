@@ -9,6 +9,7 @@ import { useParams } from 'react-router'
 import { addMemberAction, updateMemberAction } from '../../redux/members/actions'
 import { useEffect } from 'react'
 // pattern={/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/}
+
 function EditMemberForm({ isEdit, members, addMember, updateMember }) {
    const params = useParams()
 
@@ -19,9 +20,10 @@ function EditMemberForm({ isEdit, members, addMember, updateMember }) {
    }, callback)
 
    function callback(values) {
-      console.log(values)
       if (isEdit) {
-         updateMember(params.id, values)
+         // console.log(Number(params.id))
+         debugger
+         updateMember(values._id, values, Number(params.id))
       } else {
          addMember(values)
       }
@@ -29,8 +31,7 @@ function EditMemberForm({ isEdit, members, addMember, updateMember }) {
 
    useEffect(() => {
       if (isEdit) {
-         let currentMember = members.find((member) => member._id === params.id)
-         setState(() => currentMember)
+         setState(() => members[Number(params.id)])
       }
    }, [])
 
@@ -104,7 +105,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
    return {
       addMember: (data) => dispatch(addMemberAction(data)),
-      updateMember: (id, data) => dispatch(updateMemberAction(id, data))
+      updateMember: (id, data, index) => dispatch(updateMemberAction(id, data, index))
    }
 }
 

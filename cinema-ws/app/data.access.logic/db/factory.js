@@ -1,10 +1,16 @@
 const { catchAsync } = require("../../utils/asyncWrapper")
 
 
-exports.getAll = function (Model, populateOptions) {
+exports.getAll = function (Model, options) {
    return catchAsync(async function (request, response, next) {
+      let data = null
 
-      const data = await Model.find({})
+      if (options) {
+         const { qurey } = options
+         data = await qurey
+      } else {
+         data = await Model.find({})
+      }
 
       console.log('GET ALL SUCCESS: ', Model.collection.collectionName)
 

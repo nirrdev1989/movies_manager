@@ -2,7 +2,7 @@ import { SUBS_ACTIONS_TYPES } from "../subs/actions.types";
 import { MOVIES_ACTIONS_TYPES } from "./actions.types";
 
 const INITIAL_STATE = {
-   movies: [],
+   movies: null,
    loading: false,
    error: null,
 }
@@ -11,9 +11,13 @@ export default function moviesReducer(state = INITIAL_STATE, action) {
    switch (action.type) {
       case SUBS_ACTIONS_TYPES.ADD_SUB_SUCCESS_MOVIES:
          console.log(action.payload)
-         return state
+         const member = action.payload.member
+         const findIndex = state.movies.findIndex((m) => m._id === action.payload.movieId)
+         state.movies[findIndex].movieSubs.push(member)
 
-
+         return {
+            ...state
+         }
       case MOVIES_ACTIONS_TYPES.GET_MOVIES_SUCCESS:
          return {
             movies: action.payload
@@ -27,9 +31,7 @@ export default function moviesReducer(state = INITIAL_STATE, action) {
       case MOVIES_ACTIONS_TYPES.DELETE_MOVIE_FAIL:
          return state
       case MOVIES_ACTIONS_TYPES.UPDATE_MOVIE_SUCCESS:
-         const index = state.movies.findIndex((movie) => movie._id === action.payload._id)
-         state.movies[index] = action.payload
-
+         state.movies[action.payload.index] = action.payload.item
          return {
             movies: [...state.movies]
          }

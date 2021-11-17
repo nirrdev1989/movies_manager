@@ -1,33 +1,37 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { useParams } from 'react-router'
 import styled from 'styled-components'
 import { deleteMemberAction, getMembersAction } from '../../redux/members/actions'
-import { getMoviesAction } from '../../redux/movies/actions'
 import MemberItem from './MemberItem'
 
 
-function MembersList({ loading, movies, getMembers, members, deleteMember, getMovies }) {
+function MembersList({ loading, getMembers, members, deleteMember }) {
+   const { id } = useParams()
 
    function onDelete(id) {
       deleteMember(id)
    }
 
    React.useEffect(() => {
-      getMembers()
-      // getMovies()
-      if (!members.length) {
+      if (!members) {
+         getMembers()
       }
-      if (!movies.length) {
-      }
-
-      console.log(movies)
    }, [])
+   console.log(members)
 
    return (
       <Container>
-         {members && members.map((member) => {
+         {members && members.map((member, i) => {
+            if (id) {
+               if (id === member._id) {
+                  <MemberItem key={member._id} onDelete={onDelete} member={member} index={i} />
+               } else {
+                  return null
+               }
+            }
             return (
-               <MemberItem key={member._id} member={member} onDelete={onDelete} movies={movies} />
+               <MemberItem key={member._id} member={member} onDelete={onDelete} index={i} />
             )
          })}
       </Container>
@@ -39,7 +43,7 @@ function mapStateToProps(state) {
    return {
       loading: state.members.loading,
       members: state.members.members,
-      movies: state.movies.movies,
+      // movies: state.movies.movies,
    }
 }
 
@@ -47,7 +51,7 @@ function mapDispatchToProps(dispatch) {
    return {
       getMembers: () => dispatch(getMembersAction()),
       deleteMember: (id) => dispatch(deleteMemberAction(id)),
-      getMovies: () => dispatch(getMoviesAction()),
+      // getMovies: () => dispatch(getMoviesAction()),
    }
 }
 

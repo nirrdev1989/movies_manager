@@ -8,9 +8,8 @@ import UsersMangePage from "../pages/UsersMangePage";
 import Loader from "../components/Loader/Loader";
 import SubscriptionsPage from "../pages/SubscriptionsPage";
 import MembersList from "../components/Members/MembersList";
-import { lazy } from "react";
 import EditSubPage from "../pages/EditSubPage";
-// import Ex from "../pages/Ex";
+// import { lazy } from "react";
 // component: lazy(() => import('../pages/HomePage')),
 
 
@@ -23,14 +22,6 @@ export const routesConfig = [
       private: false,
       fallback: <Loader />
    },
-   // {
-   //    key: '/ex',
-   //    path: '/ex',
-   //    exact: true,
-   //    private: false,
-   //    component: lazy(() => import('../pages/Ex')),
-   //    fallback: <Loader />
-   // },
    {
       key: 'HOME',
       path: '/home',
@@ -124,7 +115,15 @@ export const routesConfig = [
                   private: true,
                   exact: false,
                   fallback: <Loader />,
-               }
+               },
+               {
+                  key: 'MAIN_MOVIES_ALL_ONE',
+                  path: '/main/movies/:id',
+                  component: MoviesList,
+                  private: true,
+                  exact: false,
+                  fallback: <Loader />,
+               },
             ]
          },
          {
@@ -159,7 +158,15 @@ export const routesConfig = [
                   private: true,
                   exact: false,
                   fallback: <Loader />,
-               }
+               },
+               {
+                  key: 'MAIN_MEMBERS_ALL_ONE',
+                  path: '/main/subscriptions/:id',
+                  component: MembersList,
+                  private: true,
+                  exact: false,
+                  fallback: <Loader />,
+               },
             ]
          }
       ]

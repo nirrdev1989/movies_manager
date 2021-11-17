@@ -1,6 +1,7 @@
 import history from '../../hooks/router.history'
 import { httpCall } from '../../utils/http'
 import { SUBS_ACTIONS_TYPES } from './actions.types'
+import { errorToast, successToast } from '../../utils/toast'
 
 
 
@@ -11,12 +12,12 @@ export function addSubAction(data) {
          const result = await httpCall.post('http://localhost:6789/api/subs/add_sub', data)
 
          console.log(result.data)
-
+         successToast(result.data.message)
          dispatch({
             type: SUBS_ACTIONS_TYPES.ADD_SUB_SUCCESS_MOVIES,
             payload: {
                ...data,
-               movieId: data.movieId
+               ...result.data.data
             }
          })
 
@@ -24,13 +25,14 @@ export function addSubAction(data) {
             type: SUBS_ACTIONS_TYPES.ADD_SUB_SUCCESS_MEMBERS,
             payload: {
                ...data,
-               memberId: data.memberId,
+               ...result.data.data
             }
          })
 
          history.push('/main/subscriptions/all')
       } catch (error) {
          console.log(error.response)
+         errorToast(error.response.data.message)
          dispatch({ type: SUBS_ACTIONS_TYPES.ADD_SUB_FAIL, payload: error.response.data.message })
       }
    }

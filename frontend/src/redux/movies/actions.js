@@ -51,7 +51,7 @@ export function deleteMovieAction(id) {
    }
 }
 
-export function updateMovieAction(id, data) {
+export function updateMovieAction(id, data, index) {
    return async function (dispatch) {
       // dispatch({ type: MOVIES_ACTIONS_TYPES.UPDATE_USER_START })
       try {
@@ -62,8 +62,11 @@ export function updateMovieAction(id, data) {
          dispatch({
             type: MOVIES_ACTIONS_TYPES.UPDATE_MOVIE_SUCCESS,
             payload: {
-               _id: id,
-               ...data
+               item: {
+                  _id: id,
+                  ...data
+               },
+               index: index
             }
          })
 

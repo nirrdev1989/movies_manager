@@ -1,7 +1,7 @@
 import { USERS_ACTIONS_TYPES } from "./actions.types";
 
 const INITIAL_STATE = {
-   users: [],
+   users: null,
    error: null,
    loading: false,
 }
@@ -27,8 +27,7 @@ export default function usersReducer(state = INITIAL_STATE, action) {
       case USERS_ACTIONS_TYPES.DELETE_USER_FAIL:
          return state
       case USERS_ACTIONS_TYPES.UPDATE_USER_SUCCESS:
-         const index = state.users.findIndex((user) => user._id === action.payload._id)
-         state.users[index] = action.payload
+         state.users[action.payload.index] = action.payload.item
          return {
             users: [...state.users]
          }

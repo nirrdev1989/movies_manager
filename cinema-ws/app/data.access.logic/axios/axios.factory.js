@@ -69,7 +69,6 @@ exports.delete = function (url) {
       const { data } = await axios({
          url: url + request.params.id,
          method: 'DELETE',
-         // params: request.params.id,
          ...options
       })
 

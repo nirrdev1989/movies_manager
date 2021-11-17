@@ -7,8 +7,7 @@ const SubscriptionSchema = new mongoose.Schema({
    },
    movies: [{
       movieId: { type: mongoose.Schema.Types.ObjectId, ref: 'movies' },
-      subDate: { type: String }
-
+      dateWatched: { type: String }
    }],
 }, { timestamps: true })
 

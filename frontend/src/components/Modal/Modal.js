@@ -1,7 +1,5 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { toggleModalAction } from '../../redux/modal/actions'
 import Button from '../components-utils/Button'
 import ReactDOM from 'react-dom';
 
@@ -11,10 +9,7 @@ function Modal({ children, closeModal, show }) {
       ReactDOM.createPortal(
          <ModalContainer>
             <ModalBox>
-               {/* <p> {warningIcon} </p> */}
-               {/* <p><strong>{'message'}</strong></p> */}
                {children}
-               {/* <Button blue onClick={() => toggleModal(false)}>Close</Button> */}
                <Button color="red" content="Close" handler={closeModal} />
             </ModalBox>
          </ModalContainer>
@@ -22,19 +17,7 @@ function Modal({ children, closeModal, show }) {
    )
 }
 
-// function mapStateToProps(state) {
-//    return {
-//       show: state.modal.status
-//    }
-// }
 
-// function mapDispatchToProps(dispatch) {
-//    return {
-//       toggleModal: (status) => dispatch(toggleModalAction(status))
-//    }
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Modal)
 export default Modal
 
 

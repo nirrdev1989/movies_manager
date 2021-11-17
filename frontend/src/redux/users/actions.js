@@ -56,7 +56,7 @@ export function deleteUserAction(id) {
    }
 }
 
-export function updateUserAction(id, data) {
+export function updateUserAction(id, data, index) {
    return async function (dispatch) {
       // dispatch({ type: USERS_ACTIONS_TYPES.UPDATE_USER_START })
       try {
@@ -68,8 +68,11 @@ export function updateUserAction(id, data) {
          dispatch({
             type: USERS_ACTIONS_TYPES.UPDATE_USER_SUCCESS,
             payload: {
-               _id: id,
-               ...data
+               item: {
+                  _id: id,
+                  ...data
+               },
+               index: index
             }
          })
 

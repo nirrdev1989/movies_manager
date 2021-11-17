@@ -5,7 +5,7 @@ import Button from '../components-utils/Button'
 import NavigateButton from '../components-utils/NavigateButton'
 
 
-export default function UserItem({ user, onDelete }) {
+export default function UserItem({ user, onDelete, index }) {
    return (
       <CardWrapper>
          <Card width="300px" height="250px" >
@@ -19,7 +19,7 @@ export default function UserItem({ user, onDelete }) {
                <span>Premmisions: {JSON.stringify(user.premissions)}</span>
             </CardBody>
             <CardFooter>
-               <NavigateButton content={editIcon} url={`/main/users/edit_user/${user._id}`} />
+               <NavigateButton content={editIcon} url={`/main/users/edit_user/${index}`} />
                <Button type="button" handler={() => onDelete(user._id)} content={deleteIcon} />
             </CardFooter>
          </Card>

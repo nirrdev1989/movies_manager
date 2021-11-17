@@ -3,40 +3,48 @@ import styled from 'styled-components'
 import { deleteMovieAction, getMoviesAction } from '../../redux/movies/actions'
 import { connect } from 'react-redux'
 import MovieItem from './MovieItem'
-import { useHistory } from 'react-router'
+import { useHistory, useParams } from 'react-router'
 // import Loader from '../Loader/Loader'
 
 function MoviesList({ loading, getMovies, movies, deleteMovie }) {
    const history = useHistory()
+   const { id } = useParams()
+
 
    function onDelete(id) {
       deleteMovie(id)
    }
 
    React.useEffect(() => {
-      getMovies()
-      if (!movies.length) {
+      if (!movies) {
+         getMovies()
       }
    }, [])
-   console.log(history)
+
    return (
       <Container>
-         {/* {loading && <Loader />} */}
-         {movies && movies.map((movie) => {
+         {movies && movies.map((movie, i) => {
             if (history.location.pathname.includes('search')) {
                let lowerMovieName = movie.movieName.toLowerCase()
                let lowerSearchParam = history.location.search.split('?')[1].toLowerCase()
 
                if (lowerMovieName.includes(lowerSearchParam)) {
                   return (
-                     <MovieItem key={movie._id} onDelete={onDelete} movie={movie} />
+                     <MovieItem key={movie._id} onDelete={onDelete} movie={movie} index={i} />
                   )
                } else {
                   return null
                }
             }
+            else if (id) {
+               if (id === movie._id) {
+                  <MovieItem key={movie._id} onDelete={onDelete} movie={movie} index={i} />
+               } else {
+                  return null
+               }
+            }
             return (
-               <MovieItem key={movie._id} onDelete={onDelete} movie={movie} />
+               <MovieItem key={movie._id} onDelete={onDelete} movie={movie} index={i} />
             )
          })}
       </Container>
@@ -67,3 +75,4 @@ export const Container = styled.div`
    margin-top: 1rem;
    padding-bottom: 3rem;
 `
+

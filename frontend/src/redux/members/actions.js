@@ -75,7 +75,7 @@ export function deleteMemberAction(id) {
    }
 }
 
-export function updateMemberAction(id, data) {
+export function updateMemberAction(id, data, index) {
    return async function (dispatch) {
       // dispatch({ type: MEMBERS_ACTIONS_TYPES.UPDATE_USER_START })
       try {
@@ -84,11 +84,15 @@ export function updateMemberAction(id, data) {
          console.log(result.data)
 
          successToast(result.data.message)
+
          dispatch({
             type: MEMBERS_ACTIONS_TYPES.UPDATE_MEMBER_SUCCESS,
             payload: {
-               _id: id,
-               ...data
+               index: index,
+               item: {
+                  _id: id,
+                  ...data
+               }
             }
          })
 

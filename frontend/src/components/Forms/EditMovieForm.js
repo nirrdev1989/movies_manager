@@ -26,7 +26,7 @@ function EditMovieForm({ isEdit, movies, addMovie, updateMovie }) {
          values.genres = values.genres.split(',')
       }
       if (isEdit) {
-         updateMovie(params.id, values)
+         updateMovie(values._id, values, Number(params.id))
       } else {
          addMovie(values)
       }
@@ -34,9 +34,7 @@ function EditMovieForm({ isEdit, movies, addMovie, updateMovie }) {
 
    useEffect(() => {
       if (isEdit) {
-         let currentMovie = movies.find((movie) => movie._id === params.id)
-         currentMovie.premiered = formatDateForInput(currentMovie.premiered)
-         setState(() => currentMovie)
+         setState(() => movies[Number(params.id)])
       }
    }, [])
 
@@ -118,7 +116,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
    return {
       addMovie: (data) => dispatch(addMovieAction(data)),
-      updateMovie: (id, data) => dispatch(updateMovieAction(id, data))
+      updateMovie: (id, data, index) => dispatch(updateMovieAction(id, data, index))
    }
 }
 

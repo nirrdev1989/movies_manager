@@ -28,7 +28,7 @@ function EditUserForm({ isEdit, addUser, loading, error, users, updateUser }) {
    function callback(values) {
       console.log(values)
       if (isEdit) {
-         updateUser(params.id, values)
+         updateUser(values._id, values, Number(params.id))
       } else {
          addUser(values)
       }
@@ -52,9 +52,7 @@ function EditUserForm({ isEdit, addUser, loading, error, users, updateUser }) {
 
    useEffect(() => {
       if (isEdit) {
-         let currentUser = users.find((user) => user._id === params.id)
-         currentUser.createdDate = formatDateForInput(currentUser.createdDate)
-         setState(() => currentUser)
+         setState(() => users[Number(params.id)])
       }
    }, [])
 
@@ -173,7 +171,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
    return {
       addUser: (data) => dispatch(addUserAction(data)),
-      updateUser: (id, data) => dispatch(updateUserAction(id, data))
+      updateUser: (id, data, index) => dispatch(updateUserAction(id, data, index))
    }
 }
 

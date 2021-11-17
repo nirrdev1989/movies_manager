@@ -1,47 +1,24 @@
-import React from 'react'
+import { useState } from 'react'
 import { deleteIcon, editIcon } from '../../icons'
 import { CardWrapper, Card, CardBody, CardFooter, CardHeader } from '../../styles/Card'
 import Button from '../components-utils/Button'
 import NavigateButton from '../components-utils/NavigateButton'
 import styled from 'styled-components'
-import useForm from '../../hooks/useForm'
-import { FormControlS } from '../../styles/FormControl'
+
 import { connect } from 'react-redux'
 import { addSubAction } from '../../redux/subs/actions'
-import { toggleModalAction } from '../../redux/modal/actions'
 import Modal from '../Modal/Modal'
+import { Link } from 'react-router-dom'
+import AddSubForm from '../Forms/AddSubForm'
 
-function MemberItem({ member, onDelete, movies, addSub, toggleModal }) {
+function MemberItem({ member, onDelete, index }) {
 
-   const [showModal, setShowModal] = React.useState(false)
-
-   const { state, onChange, onSubmit } = useForm({
-      movieId: '',
-      dateWatched: ''
-   }, callback)
-
-   function callback(values) {
-      values.memberId = member._id
-      console.log(values)
-      addSub(values)
-      setShowModal(false)
-   }
-
+   const [showModal, setShowModal] = useState(false)
+   console.log(index)
    return (
       <CardWrapper>
          <Modal show={showModal} closeModal={() => setShowModal(false)} >
-            <form onSubmit={onSubmit} >
-               <h3 style={{ textAlign: 'center' }} >Subscribe Movie</h3>
-               <select style={{ height: '30px', marginBottom: '0.5rem' }} type="text" name="movieId" onChange={onChange} value={state.nameMovie} >
-                  {movies.length > 0 && movies.map((movie) => {
-                     return <option key={movie._id} value={movie._id} >{movie.movieName}</option>
-                  })}
-               </select>
-               <FormControlS className="form_control" style={{ height: 'auto' }}>
-                  <input type="date" name="dateWatched" onChange={onChange} value={state.dateWatched} />
-               </FormControlS>
-               <Button type="submit" bg="rgb(34, 238, 170)" content="Add" />
-            </form>
+            <AddSubForm member={member} />
          </Modal>
          <Card width="300px" height="300px">
             <CardHeader>
@@ -56,9 +33,18 @@ function MemberItem({ member, onDelete, movies, addSub, toggleModal }) {
                      <Button handler={() => setShowModal(true)} type="button" bg="whitesmoke" color="green" content="Subscribe" />
                   </AddSubHeader>
                </AddSubContainer>
+
+               {member.memberMovies.length > 0 &&
+                  <SubsListContainer>
+                     <ul>
+                        {member.memberMovies.map((movie) => {
+                           return <li><Link to={`/main/movies/${movie._id}`} key={movie._id + 1}> {movie.movieName} </Link></li>
+                        })}
+                     </ul>
+                  </SubsListContainer>}
             </CardBody>
             <CardFooter>
-               <NavigateButton content={editIcon} url={`/main/subscriptions/edit_member/${member._id}`} />
+               <NavigateButton content={editIcon} url={`/main/subscriptions/edit_member/${index}`} />
                <Button type="button" handler={() => onDelete(member._id)} content={deleteIcon} />
             </CardFooter>
          </Card>
@@ -69,7 +55,6 @@ function MemberItem({ member, onDelete, movies, addSub, toggleModal }) {
 function mapDispatchToProps(dispatch) {
    return {
       addSub: (data) => dispatch(addSubAction(data)),
-      toggleModal: (status) => dispatch(toggleModalAction(status))
    }
 }
 
@@ -91,4 +76,23 @@ export const AddSubHeader = styled.div`
      font-size: 13px;
      /* height: 25px; */
   }
+  `
+
+export const SubsListContainer = styled.div` 
+    margin-top: 0.5rem;
+    width: 90%;
+    max-height: 100px;
+    overflow-x: hidden;
+    ::-webkit-scrollbar {
+      width: 7px;
+   }
+   ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+   }
+   ::-webkit-scrollbar-thumb {
+      background: #888;
+   }
+   ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+   }
   `

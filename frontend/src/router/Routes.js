@@ -5,20 +5,20 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 function RouteWithSubRoutes(route) {
 
    const { isAuth, currentUser } = useSelector((state) => state.auth)
-   console.log(currentUser)
+   // console.log('CURRENT USER: ', currentUser, 'IS AUTH: ', isAuth)
 
    return (
       <Suspense fallback={route.fallback}>
          <Route
             path={route.path}
             render={(props) => {
-               console.log('ROUTE IS PRIVETE:', route.private, 'IS AUTH: ', isAuth)
+               // console.log('ROUTE IS PRIVETE:', route.private, 'IS AUTH: ', isAuth)
                if (route.redirect && !route.private) {
                   return <Redirect to={route.redirect} exact={route.exact} />
                }
                else if (route.private && isAuth) {
 
-                  console.log('PRIVTE ROUTE')
+                  // console.log('PRIVTE ROUTE')
                   return <route.component {...props} childrenRoutes={route.children} />
                }
                else if (route.private && !isAuth) {

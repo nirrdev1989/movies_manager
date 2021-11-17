@@ -13,18 +13,16 @@ function UsersList({ loading, getUsers, users, deleteUser }) {
    }
 
    React.useEffect(() => {
-      getUsers()
-      if (!users.length) {
+      if (!users) {
+         getUsers()
       }
    }, [])
 
-   // console.log(users)
-
    return (
       <Container>
-         {users && users.map((user) => {
+         {users && users.map((user, i) => {
             return (
-               <UserItem key={user._id} onDelete={onDelete} user={user} />
+               <UserItem key={user._id} onDelete={onDelete} user={user} index={i} />
             )
          })}
       </Container>
