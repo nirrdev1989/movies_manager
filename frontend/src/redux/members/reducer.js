@@ -10,12 +10,10 @@ const INITIAL_STATE = {
 export default function membersReducer(state = INITIAL_STATE, action) {
    switch (action.type) {
       case SUBS_ACTIONS_TYPES.ADD_SUB_SUCCESS_MEMBERS:
-         console.log(action.payload)
          const movie = action.payload.movie
          const findIndex = state.members.findIndex((m) => m._id === action.payload.memberId)
          state.members[findIndex].memberMovies.push(movie)
 
-         console.log(state.members[findIndex])
          return {
             ...state
          }

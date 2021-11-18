@@ -38,7 +38,7 @@ Axios.interceptors.response.use((response) => {
    const message = error.response.data.message
    console.log(message, statusCode, statusText)
    if (statusCode === 401 && statusText === 'Unauthorized') {
-      history.push('/')
+      history.push('/home')
       return Promise.reject(message)
    }
    errorToast(message)

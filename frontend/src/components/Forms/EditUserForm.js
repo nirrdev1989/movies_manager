@@ -26,14 +26,11 @@ function EditUserForm({ isEdit, addUser, loading, users, updateUser }) {
    }, callback)
 
    function callback(values) {
-
-      console.log(values)
-
-      // if (isEdit) {
-      //    updateUser(values._id, values, Number(params.id))
-      // } else {
-      //    addUser(values)
-      // }
+      if (isEdit) {
+         updateUser(values._id, values, Number(params.id))
+      } else {
+         addUser(values)
+      }
    }
 
    function handleChangePremissions(event) {

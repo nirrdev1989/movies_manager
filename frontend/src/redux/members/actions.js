@@ -1,6 +1,10 @@
 import { httpCall } from "../../utils/http"
 import { MEMBERS_ACTIONS_TYPES } from "./actions.types"
 import history from '../../hooks/router.history'
+import { MOVIES_ACTIONS_TYPES } from "../movies/actions.types"
+
+
+
 
 export function getMembersAction() {
    return async function (dispatch) {
@@ -46,6 +50,11 @@ export function deleteMemberAction(id) {
       // dispatch({ type: MEMBERS_ACTIONS_TYPES.DELETE_USER_START })
       try {
          const result = await httpCall.delete('http://localhost:6789/api/members/delete/' + id)
+
+         // dispatch({
+         //    type: MOVIES_ACTIONS_TYPES.DELETE_MEMBER_FROM_MOVIES,
+         //    payload: id
+         // })
 
          dispatch({
             type: MEMBERS_ACTIONS_TYPES.DELETE_MEMBER_SUCCESS,

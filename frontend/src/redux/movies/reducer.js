@@ -9,6 +9,12 @@ const INITIAL_STATE = {
 
 export default function moviesReducer(state = INITIAL_STATE, action) {
    switch (action.type) {
+      case MOVIES_ACTIONS_TYPES.DELETE_MEMBER_FROM_MOVIES:
+      // for(const movie of movies) {
+      //    for(const sub of movie.movieSubs) {
+
+      //    }
+      // }
       case SUBS_ACTIONS_TYPES.ADD_SUB_SUCCESS_MOVIES:
          console.log(action.payload)
          const member = action.payload.member
