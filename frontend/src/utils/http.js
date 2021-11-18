@@ -1,4 +1,10 @@
 import Axios from 'axios'
+import { errorToast, successToast } from './toast'
+import history from '../hooks/router.history'
+
+const BASE_URL = 'http://localhost:6789/api/'
+
+
 
 const options = {
    withCredentials: true,
@@ -7,6 +13,37 @@ const options = {
       'Content-Type': 'application/json'
    },
 }
+
+Axios.interceptors.request.use((request) => {
+   console.log('AXIOS MIDDALEWARE REQUEST: ', request)
+
+   return request
+}, (error) => {
+
+   return Promise.reject(error)
+})
+
+Axios.interceptors.response.use((response) => {
+   console.log('AXIOS MIDDALEWARE RESPONSE: ', response)
+   const { url, method } = response.config
+
+   if (!url.includes('auth') && method !== 'get') {
+      successToast(response.data.message)
+   }
+   return response.data
+}, (error) => {
+   console.log('AXIOS MIDDALEWARE RESPONSE ERROR: ', error.response)
+   const statusText = error.response.statusText
+   const statusCode = error.response.status
+   const message = error.response.data.message
+   console.log(message, statusCode, statusText)
+   if (statusCode === 401 && statusText === 'Unauthorized') {
+      history.push('/')
+      return Promise.reject(message)
+   }
+   errorToast(message)
+   return Promise.reject(message)
+})
 
 export const httpCall = {
    get: async function (url, params = {}) {

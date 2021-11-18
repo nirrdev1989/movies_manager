@@ -28,12 +28,10 @@ const options = {
 export function apiMiddeleware({ dispatch }) {
    return function (next) {
       return function (action) {
-         console.log(action)
+         // console.log(action)
 
          if (AUTH_ACTIONS_TYPES[action.type]) {
             const { successAction, errorAction, redirect, displyToastError, globalLoader } = action
-
-            console.log(action)
 
             if (globalLoader) {
                dispatch(loaderStatusAction(true))
@@ -43,7 +41,6 @@ export function apiMiddeleware({ dispatch }) {
                ...action.metaData,
                ...options
             }).then((result) => {
-               console.log(result)
                if (redirect) {
                   redirect()
                }
@@ -52,17 +49,12 @@ export function apiMiddeleware({ dispatch }) {
                   dispatch(loaderStatusAction(false))
                }
 
-               dispatch({ type: successAction, payload: result.data.data })
+               dispatch({ type: successAction, payload: result.data })
             }).catch((error) => {
-               console.log(error.response.data.message)
-               dispatch({ type: errorAction, payload: error.response.data.message })
+               dispatch({ type: errorAction, payload: error })
 
                if (globalLoader) {
                   dispatch(loaderStatusAction(false))
-               }
-
-               if (displyToastError) {
-                  errorToast(error.response.data.message)
                }
             })
          }

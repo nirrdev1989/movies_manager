@@ -1,11 +1,1 @@
-{
-   "premissions": {
-      "6193bd5b3f61393d517832db": {
-         "_id": "6193bd5b3f61393d517832db",
-         "premissions": [
-            "view movies",
-            "edit movies"
-         ]
-      }
-   }
-}
+{"premissions":{"6195f692ff6d559916db2019":{"_id":"6195f692ff6d559916db2019","premissions":["edit movies","delete movies","view subs"]}}}

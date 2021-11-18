@@ -4,7 +4,6 @@ import { CardWrapper, Card, CardBody, CardFooter, CardHeader } from '../../style
 import Button from '../components-utils/Button'
 import NavigateButton from '../components-utils/NavigateButton'
 import styled from 'styled-components'
-
 import { connect } from 'react-redux'
 import { addSubAction } from '../../redux/subs/actions'
 import Modal from '../Modal/Modal'
@@ -12,9 +11,8 @@ import { Link } from 'react-router-dom'
 import AddSubForm from '../Forms/AddSubForm'
 
 function MemberItem({ member, onDelete, index }) {
-
    const [showModal, setShowModal] = useState(false)
-   console.log(index)
+
    return (
       <CardWrapper>
          <Modal show={showModal} closeModal={() => setShowModal(false)} >
@@ -34,7 +32,7 @@ function MemberItem({ member, onDelete, index }) {
                   </AddSubHeader>
                </AddSubContainer>
 
-               {member.memberMovies.length > 0 &&
+               {member?.memberMovies.length > 0 &&
                   <SubsListContainer>
                      <ul>
                         {member.memberMovies.map((movie) => {

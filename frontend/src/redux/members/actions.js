@@ -1,7 +1,6 @@
 import { httpCall } from "../../utils/http"
 import { MEMBERS_ACTIONS_TYPES } from "./actions.types"
 import history from '../../hooks/router.history'
-import { errorToast, successToast } from "../../utils/toast";
 
 export function getMembersAction() {
    return async function (dispatch) {
@@ -9,15 +8,12 @@ export function getMembersAction() {
       try {
          const result = await httpCall.get('http://localhost:6789/api/members/all')
 
-         console.log(result.data)
-
          dispatch({
             type: MEMBERS_ACTIONS_TYPES.GET_MEMBERS_SUCCESS,
-            payload: result.data.data
+            payload: result.data
          })
       } catch (error) {
-         console.log(error.response)
-         dispatch({ type: MEMBERS_ACTIONS_TYPES.GET_MEMBERS_FAIL, payload: error.response.data.message })
+         dispatch({ type: MEMBERS_ACTIONS_TYPES.GET_MEMBERS_FAIL, payload: error })
       }
    }
 }
@@ -28,25 +24,19 @@ export function addMemberAction(data) {
       // dispatch({ type: MEMBERS_ACTIONS_TYPES.ADD_MOVIE_START })
       try {
          const result = await httpCall.post('http://localhost:6789/api/members/add_member', data)
-
-         console.log(result.data)
-
-         successToast(result.data.message)
+         data.memberMovies = []
 
          dispatch({
             type: MEMBERS_ACTIONS_TYPES.ADD_MEMBER_SUCCESS,
             payload: {
                ...data,
-               _id: result.data.data
+               _id: result.data
             }
          })
 
-
          history.goBack()
       } catch (error) {
-         console.log(error.response)
-         errorToast(error.response.data.message)
-         dispatch({ type: MEMBERS_ACTIONS_TYPES.ADD_MEMBER_FAIL, payload: error.response.data.message })
+         dispatch({ type: MEMBERS_ACTIONS_TYPES.ADD_MEMBER_FAIL, payload: error })
       }
    }
 }
@@ -57,20 +47,13 @@ export function deleteMemberAction(id) {
       try {
          const result = await httpCall.delete('http://localhost:6789/api/members/delete/' + id)
 
-         console.log(result.data)
-
-         successToast(result.data.message)
-
          dispatch({
             type: MEMBERS_ACTIONS_TYPES.DELETE_MEMBER_SUCCESS,
             payload: id
          })
 
-
       } catch (error) {
-         console.log(error.response)
-         errorToast(error.response.data.message)
-         dispatch({ type: MEMBERS_ACTIONS_TYPES.DELETE_MEMBER_FAIL, payload: error.response.data.message })
+         dispatch({ type: MEMBERS_ACTIONS_TYPES.DELETE_MEMBER_FAIL, payload: error })
       }
    }
 }
@@ -80,10 +63,6 @@ export function updateMemberAction(id, data, index) {
       // dispatch({ type: MEMBERS_ACTIONS_TYPES.UPDATE_USER_START })
       try {
          const result = await httpCall.put('http://localhost:6789/api/members/update/' + id, data)
-
-         console.log(result.data)
-
-         successToast(result.data.message)
 
          dispatch({
             type: MEMBERS_ACTIONS_TYPES.UPDATE_MEMBER_SUCCESS,
@@ -96,12 +75,9 @@ export function updateMemberAction(id, data, index) {
             }
          })
 
-
          history.goBack()
       } catch (error) {
-         console.log(error.response)
-         errorToast(error.response.data.message)
-         dispatch({ type: MEMBERS_ACTIONS_TYPES.UPADTE_MEMBER_FAIL, payload: error.response.data.message })
+         dispatch({ type: MEMBERS_ACTIONS_TYPES.UPADTE_MEMBER_FAIL, payload: error })
       }
    }
 }

@@ -29,7 +29,6 @@ export function loginActionStart(data) {
       successAction: AUTH_ACTIONS_TYPES.AUTH_LOGIN_SUCCESS,
       errorAction: AUTH_ACTIONS_TYPES.AUTH_LOGIN_FAIL,
       globalLoader: true,
-      displyToastError: true
    }
 }
 
@@ -44,7 +43,6 @@ export function registerActionStart(data) {
       successAction: AUTH_ACTIONS_TYPES.AUTH_REGISTER_SUCCESS,
       errorAction: AUTH_ACTIONS_TYPES.AUTH_REGISTER_FAIL,
       globalLoader: true,
-      displyToastError: true,
       redirect: function () {
          history.goBack()
       }

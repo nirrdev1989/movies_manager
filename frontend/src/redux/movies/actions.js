@@ -1,6 +1,5 @@
 import history from '../../hooks/router.history'
 import { httpCall } from '../../utils/http'
-import { errorToast, successToast } from '../../utils/toast'
 import { MOVIES_ACTIONS_TYPES } from './actions.types'
 
 
@@ -11,22 +10,19 @@ export function addMovieAction(data) {
       try {
          const result = await httpCall.post('http://localhost:6789/api/movies/add_movie', data)
 
-         console.log(result.data)
+         data.movieSubs = []
 
-         successToast(result.data.message)
          dispatch({
             type: MOVIES_ACTIONS_TYPES.ADD_MOVIE_SUCCESS,
             payload: {
                ...data,
-               _id: result.data.data
+               _id: result.data
             }
          })
 
          history.goBack()
       } catch (error) {
-         console.log(error.response)
-         errorToast(error.response.data.message)
-         dispatch({ type: MOVIES_ACTIONS_TYPES.ADD_MOVIE_FAIL, payload: error.response.data.message })
+         dispatch({ type: MOVIES_ACTIONS_TYPES.ADD_MOVIE_FAIL, payload: error })
       }
    }
 }
@@ -37,16 +33,12 @@ export function deleteMovieAction(id) {
       try {
          const result = await httpCall.delete('http://localhost:6789/api/movies/delete/' + id)
 
-         console.log(result.data)
-         successToast(result.data.message)
          dispatch({
             type: MOVIES_ACTIONS_TYPES.DELETE_MOVIE_SUCCESS,
             payload: id
          })
       } catch (error) {
-         console.log(error.response)
-         errorToast(error.response.data.message)
-         dispatch({ type: MOVIES_ACTIONS_TYPES.DELETE_MOVIE_FAIL, payload: error.response.data.message })
+         dispatch({ type: MOVIES_ACTIONS_TYPES.DELETE_MOVIE_FAIL, payload: error })
       }
    }
 }
@@ -57,8 +49,6 @@ export function updateMovieAction(id, data, index) {
       try {
          const result = await httpCall.put('http://localhost:6789/api/movies/update/' + id, data)
 
-         console.log(result.data)
-         successToast(result.data.message)
          dispatch({
             type: MOVIES_ACTIONS_TYPES.UPDATE_MOVIE_SUCCESS,
             payload: {
@@ -72,9 +62,7 @@ export function updateMovieAction(id, data, index) {
 
          history.goBack()
       } catch (error) {
-         console.log(error.response)
-         errorToast(error.response.data.message)
-         dispatch({ type: MOVIES_ACTIONS_TYPES.UPADTE_MOVIE_FAIL, payload: error.response.data.message })
+         dispatch({ type: MOVIES_ACTIONS_TYPES.UPADTE_MOVIE_FAIL, payload: error })
       }
    }
 }
@@ -86,15 +74,13 @@ export function getMoviesAction() {
       try {
          const result = await httpCall.get('http://localhost:6789/api/movies/all')
 
-         console.log(result.data)
 
          dispatch({
             type: MOVIES_ACTIONS_TYPES.GET_MOVIES_SUCCESS,
-            payload: result.data.data
+            payload: result.data
          })
       } catch (error) {
-         console.log(error.response)
-         dispatch({ type: MOVIES_ACTIONS_TYPES.GET_MOVIES_FAIL, payload: error.response.data.message })
+         dispatch({ type: MOVIES_ACTIONS_TYPES.GET_MOVIES_FAIL, payload: error })
       }
    }
 }
