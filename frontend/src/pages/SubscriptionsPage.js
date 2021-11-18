@@ -5,7 +5,7 @@ import NavigateButton from '../components/components-utils/NavigateButton'
 import { RenderRoutes } from '../router/Routes'
 
 
-export default function SubscriptionsPage({ childrenRoutes }) {
+export default function SubscriptionsPage({ childrenRoutes, currentUser }) {
    const { url } = useRouteMatch()
    const history = useHistory()
 
@@ -27,7 +27,7 @@ export default function SubscriptionsPage({ childrenRoutes }) {
          {renderNav &&
             <Navbar>
                <NavigateButton content="All Members" url={`${url}/all`} />
-               <NavigateButton content="Add Member" url={`${url}/add_member`} />
+               {currentUser.premissions.includes('add members') && <NavigateButton content="Add Member" url={`${url}/add_member`} />}
             </Navbar>
          }
          <RenderRoutes routes={childrenRoutes} />

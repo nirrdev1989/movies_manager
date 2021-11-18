@@ -108,10 +108,28 @@ async function updateUserJson(id, data) {
 }
 
 
+async function getUser(id) {
+   try {
+      const [usersData, premmisionsData] = await Promise.all(
+         [readFile(jsonUsersPath), readFile(jsonPremmisionsPath)]
+      )
+      console.log(usersData, usersData)
+      const user = {
+         ...usersData.users[id],
+         ...premmisionsData.premissions[id]
+      }
+
+      return user
+   } catch (error) {
+      throw new Error('Error')
+   }
+}
+
 module.exports = {
    addUserJson,
    addPremmisionsJson,
    getUsersJson,
    deleteUserJson,
-   updateUserJson
+   updateUserJson,
+   getUser
 }

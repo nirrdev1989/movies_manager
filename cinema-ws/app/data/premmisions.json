@@ -1,1 +1,19 @@
-{"premissions":{"6195f692ff6d559916db2019":{"_id":"6195f692ff6d559916db2019","premissions":["edit movies","delete movies","view subs"]}}}
+{
+   "premissions": {
+      "61960e1c818e2646063acced": {
+         "_id": "61960e1c818e2646063acced",
+         "premissions": [
+            "view movies",
+            "edit movies",
+            "add movies",
+            "delete movies",
+            "view members",
+            "edit members",
+            "add members",
+            "delete members",
+            "add subs",
+            "view users"
+         ]
+      }
+   }
+}

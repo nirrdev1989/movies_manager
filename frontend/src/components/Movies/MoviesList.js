@@ -6,7 +6,7 @@ import MovieItem from './MovieItem'
 import { useHistory, useParams } from 'react-router'
 // import Loader from '../Loader/Loader'
 
-function MoviesList({ loading, getMovies, movies, deleteMovie }) {
+function MoviesList({ loading, getMovies, movies, deleteMovie, currentUser }) {
    const history = useHistory()
    const { id } = useParams()
 
@@ -30,7 +30,7 @@ function MoviesList({ loading, getMovies, movies, deleteMovie }) {
 
                if (lowerMovieName.includes(lowerSearchParam)) {
                   return (
-                     <MovieItem key={movie._id} onDelete={onDelete} movie={movie} index={i} />
+                     <MovieItem key={movie._id} onDelete={onDelete} movie={movie} index={i} currentUser={currentUser} />
                   )
                } else {
                   return null
@@ -38,13 +38,13 @@ function MoviesList({ loading, getMovies, movies, deleteMovie }) {
             }
             else if (id) {
                if (id === movie._id) {
-                  <MovieItem key={movie._id} onDelete={onDelete} movie={movie} index={i} />
+                  <MovieItem key={movie._id} onDelete={onDelete} movie={movie} index={i} currentUser={currentUser} />
                } else {
                   return null
                }
             }
             return (
-               <MovieItem key={movie._id} onDelete={onDelete} movie={movie} index={i} />
+               <MovieItem key={movie._id} onDelete={onDelete} movie={movie} index={i} currentUser={currentUser} />
             )
          })}
       </Container>

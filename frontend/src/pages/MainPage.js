@@ -6,9 +6,17 @@ import { RenderRoutes } from '../router/Routes'
 import Button from '../components/components-utils/Button'
 import { connect } from 'react-redux'
 import { logoutActionStart } from '../redux/auth/actions'
+// "view movies",
+//    "edit movies",
+//    "add movies",
+//    "delete movies",
+//    "view subs",
+//    "edit subs",
+//    "add subs",
+//    "delete subs",
+//    "view users"
 
-
-function MainPage({ childrenRoutes, logout }) {
+function MainPage({ childrenRoutes, logout, currentUser }) {
    const { url } = useRouteMatch()
 
    return (
@@ -16,9 +24,9 @@ function MainPage({ childrenRoutes, logout }) {
          <NavContainer>
             <Navbar>
                <NavbarLeft>
-                  <NavigateButton url={`${url}/users/all`} content="Users Mange" />
-                  <NavigateButton url={`${url}/movies/all`} content="Movies" />
-                  <NavigateButton url={`${url}/subscriptions/all`} content="Subscriptions" />
+                  {currentUser.premissions.includes('view users') && <NavigateButton url={`${url}/users/all`} content="Users Mange" />}
+                  {currentUser.premissions.includes('view movies') && <NavigateButton url={`${url}/movies/all`} content="Movies" />}
+                  {currentUser.premissions.includes('view members') && <NavigateButton url={`${url}/subscriptions/all`} content="Subscriptions" />}
                </NavbarLeft>
                <NavbarRight>
                   <Button style={{ width: '100px' }} handler={() => logout()} bg={"whitesmoke"} content="Logout" />

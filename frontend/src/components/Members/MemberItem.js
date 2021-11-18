@@ -10,9 +10,9 @@ import Modal from '../Modal/Modal'
 import { Link } from 'react-router-dom'
 import AddSubForm from '../Forms/AddSubForm'
 
-function MemberItem({ member, onDelete, index }) {
+function MemberItem({ member, onDelete, index, currentUser }) {
    const [showModal, setShowModal] = useState(false)
-
+   console.log(currentUser.premissions.includes('edit subs'))
    return (
       <CardWrapper>
          <Modal show={showModal} closeModal={() => setShowModal(false)} >
@@ -28,7 +28,7 @@ function MemberItem({ member, onDelete, index }) {
                <AddSubContainer>
                   <AddSubHeader>
                      <span>Movies watched</span>
-                     <Button handler={() => setShowModal(true)} type="button" bg="whitesmoke" color="green" content="Subscribe" />
+                     {currentUser.premissions.includes('add subs') && <Button handler={() => setShowModal(true)} type="button" bg="whitesmoke" color="green" content="Subscribe" />}
                   </AddSubHeader>
                </AddSubContainer>
 
@@ -42,8 +42,8 @@ function MemberItem({ member, onDelete, index }) {
                   </SubsListContainer>}
             </CardBody>
             <CardFooter>
-               <NavigateButton content={editIcon} url={`/main/subscriptions/edit_member/${index}`} />
-               <Button type="button" handler={() => onDelete(member._id)} content={deleteIcon} />
+               {currentUser.premissions.includes('edit members') && <NavigateButton content={editIcon} url={`/main/subscriptions/edit_member/${index}`} />}
+               {currentUser.premissions.includes('delete members') && <Button type="button" handler={() => onDelete(member._id)} content={deleteIcon} />}
             </CardFooter>
          </Card>
       </CardWrapper>

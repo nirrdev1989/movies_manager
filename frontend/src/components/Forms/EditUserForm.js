@@ -12,7 +12,7 @@ import { addUserAction, updateUserAction } from '../../redux/users/actions'
 import { useEffect } from 'react'
 
 
-function EditUserForm({ isEdit, addUser, loading, error, users, updateUser }) {
+function EditUserForm({ isEdit, addUser, loading, users, updateUser }) {
    const params = useParams()
 
    const { state, setState, onSubmit, onChange } = useForm({
@@ -26,12 +26,14 @@ function EditUserForm({ isEdit, addUser, loading, error, users, updateUser }) {
    }, callback)
 
    function callback(values) {
+
       console.log(values)
-      if (isEdit) {
-         updateUser(values._id, values, Number(params.id))
-      } else {
-         addUser(values)
-      }
+
+      // if (isEdit) {
+      //    updateUser(values._id, values, Number(params.id))
+      // } else {
+      //    addUser(values)
+      // }
    }
 
    function handleChangePremissions(event) {
@@ -40,6 +42,11 @@ function EditUserForm({ isEdit, addUser, loading, error, users, updateUser }) {
       let presArray = state.premissions
 
       if (checked) {
+         if (value === 'edit movies' || value === 'add movies' || value === 'delete movies') {
+            presArray.push('view movies')
+         } else if (value === 'edit members' || value === 'add members' || value === 'delete members') {
+            presArray.push('view members')
+         }
          presArray.push(value)
       } else {
          presArray = presArray.filter((p) => p !== value)
@@ -163,7 +170,6 @@ function EditUserForm({ isEdit, addUser, loading, error, users, updateUser }) {
 function mapStateToProps(state) {
    return {
       loading: state.users.loading,
-      error: state.users.error,
       users: state.users.users
    }
 }

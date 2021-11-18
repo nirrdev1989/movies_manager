@@ -2,17 +2,22 @@ const app = require('./app/app')
 const { connectMongoDB } = require('./app/db/db')
 const PORT = process.env.PORT || 6789
 connectMongoDB('mongodb://127.0.0.1:27017/movies_manager_cinema')
-// const { UserModel } = require('./app/db/models/users')
+const { UserModel } = require('./app/db/models/users')
 
 
 
+async function deafaultAdmin() {
+   const b = require('bcrypt')
+   const p = await b.hash('123', 10)
 
-// UserModel.create({
-//    userName: 'vv',
-//    password: '12345'
-// }).then((x) => {
-//    console.log(x)
-// })
+   UserModel.create({
+      userName: 'vv',
+      password: p
+   })
+
+}
+
+// deafaultAdmin()
 
 app.listen(PORT, () => console.log(`Server run at port: ${PORT}`))
 

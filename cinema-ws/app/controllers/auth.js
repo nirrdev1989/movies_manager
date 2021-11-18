@@ -1,23 +1,33 @@
+const { getUser } = require("../data.access.logic/json-files/json.users");
 const { UserModel } = require("../db/models/users");
 const { catchAsync } = require("../utils/asyncWrapper");
 const { responseWithToken } = require("../utils/response.with.token");
-
+const bcrypt = require('bcrypt')
 
 exports.login = catchAsync(async function (request, response, next) {
 
    const { userName, password } = request.body
    console.log(userName, password)
 
-   const foundUser = await UserModel.findOne({ userName: userName }).select('+password')
+   const foundUser = await UserModel.findOne({ userName: userName })
 
-   if (foundUser) {
-      console.log(foundUser['password'])
-      if (foundUser['password'] && foundUser['password'] === password) {
-         return responseWithToken(foundUser, response)
-      }
+   if (!foundUser) {
+      return next(new Error('Auth fail'))
    }
 
-   next(new Error('Auth Fail'))
+   if (!foundUser['password']) {
+      return next(new Error('Please create your password'))
+   }
+
+   const isMatch = await bcrypt.compare(password, foundUser.password)
+
+   if (!isMatch) {
+      return next(new Error('Auth fail'))
+   }
+
+   const user = await getUser(foundUser._id)
+
+   return responseWithToken(user, response)
 })
 
 exports.register = catchAsync(async function (request, response, next) {
@@ -31,7 +41,9 @@ exports.register = catchAsync(async function (request, response, next) {
       return next(new Error('User not exsit'))
    }
 
-   foundUser.password = password
+   const hashPassword = await bcrypt.hash(password, 10)
+
+   foundUser.password = hashPassword
 
    const userSaved = await foundUser.save()
 

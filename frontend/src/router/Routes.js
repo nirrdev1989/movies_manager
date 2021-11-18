@@ -19,7 +19,7 @@ function RouteWithSubRoutes(route) {
                else if (route.private && isAuth) {
 
                   // console.log('PRIVTE ROUTE')
-                  return <route.component {...props} childrenRoutes={route.children} />
+                  return <route.component currentUser={currentUser} {...props} childrenRoutes={route.children} />
                }
                else if (route.private && !isAuth) {
                   return <Redirect to='/' />

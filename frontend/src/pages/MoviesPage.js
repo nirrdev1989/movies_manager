@@ -5,7 +5,8 @@ import styled from 'styled-components'
 import { searchIcon } from '../icons'
 import { RenderRoutes } from '../router/Routes'
 
-function MoviesPage({ childrenRoutes }) {
+function MoviesPage({ childrenRoutes, currentUser }) {
+
    const { url } = useRouteMatch()
    const history = useHistory()
 
@@ -27,6 +28,9 @@ function MoviesPage({ childrenRoutes }) {
          setRenderNav(() => true)
       }
    }, [history.location.pathname])
+
+   console.log(currentUser)
+
    return (
 
       <div>
@@ -34,7 +38,7 @@ function MoviesPage({ childrenRoutes }) {
             <Navbar>
                <NavbarLeft>
                   <NavigateButton content="All Movies" url={`${url}/all`} />
-                  <NavigateButton style={{ marginRight: '3rem' }} content="Add Movie" url={`${url}/add_movie`} />
+                  {currentUser.premissions.includes('add movies') && <NavigateButton style={{ marginRight: '3rem' }} content="Add Movie" url={`${url}/add_movie`} />}
                   <SearchInput>
                      {searchIcon}  <input type="search" onKeyDown={(e) => onSerach(e.keyCode, e.target.value)} />
                   </SearchInput>

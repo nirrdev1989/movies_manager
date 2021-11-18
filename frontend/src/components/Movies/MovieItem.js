@@ -6,7 +6,9 @@ import { CardWrapper, Card, CardBody, CardFooter, CardHeader } from '../../style
 import Button from '../components-utils/Button'
 import NavigateButton from '../components-utils/NavigateButton'
 
-export default function MovieItem({ movie, onDelete, index }) {
+export default function MovieItem({ movie, onDelete, index, currentUser }) {
+
+   console.log(currentUser.premissions.includes('edit movies'))
    return (
       <CardWrapper key={movie.movieName}>
          <Card width="300px" height="270px" >
@@ -31,8 +33,8 @@ export default function MovieItem({ movie, onDelete, index }) {
                <h6 className="card-subtitle mt-2  text-muted">Genres: {JSON.stringify(movie.genres)} </h6>
             </CardBody>
             <CardFooter>
-               <NavigateButton content={editIcon} url={`/main/movies/edit_movie/${index}`} />
-               <Button type="button" handler={() => onDelete(movie._id)} content={deleteIcon} />
+               {currentUser.premissions.includes('edit movies') && <NavigateButton content={editIcon} url={`/main/movies/edit_movie/${index}`} />}
+               {currentUser.premissions.includes('delete movies') && <Button type="button" handler={() => onDelete(movie._id)} content={deleteIcon} />}
             </CardFooter>
          </Card>
       </CardWrapper>
