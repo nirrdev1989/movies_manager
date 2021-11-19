@@ -1,16 +1,13 @@
-import React from 'react'
-import { useHistory, useRouteMatch, withRouter } from 'react-router'
 import NavigateButton from '../components/components-utils/NavigateButton'
 import styled from 'styled-components'
 import { searchIcon } from '../icons'
 import { RenderRoutes } from '../router/Routes'
+import { useRenderContent } from '../hooks/renderContent'
 
-function MoviesPage({ childrenRoutes, currentUser }) {
+function MoviesPage({ childrenRoutes, currentUser, history, match }) {
+   const pathname = history.location.pathname
 
-   const { url } = useRouteMatch()
-   const history = useHistory()
-
-   const [renderNav, setRenderNav] = React.useState(true)
+   const [render] = useRenderContent(pathname.includes('edit_movie') || pathname.includes('add_movie'), pathname)
 
    function onSerach(key, value) {
       if (key === 13) {
@@ -18,27 +15,13 @@ function MoviesPage({ childrenRoutes, currentUser }) {
       }
    }
 
-   React.useEffect(() => {
-      let pathName = history.location.pathname
-
-      if (pathName.includes('edit_movie') || pathName.includes('add_movie')) {
-         setRenderNav(() => false)
-      }
-      return () => {
-         setRenderNav(() => true)
-      }
-   }, [history.location.pathname])
-
-   console.log(currentUser)
-
    return (
-
       <div>
-         {renderNav &&
+         {render &&
             <Navbar>
                <NavbarLeft>
-                  <NavigateButton content="All Movies" url={`${url}/all`} />
-                  {currentUser.premissions.includes('add movies') && <NavigateButton style={{ marginRight: '3rem' }} content="Add Movie" url={`${url}/add_movie`} />}
+                  <NavigateButton content="All Movies" url={`${match.url}/all`} />
+                  {currentUser.premissions.includes('add movies') && <NavigateButton style={{ marginRight: '3rem' }} content="Add Movie" url={`${match.url}/add_movie`} />}
                   <SearchInput>
                      {searchIcon}  <input type="search" onKeyDown={(e) => onSerach(e.keyCode, e.target.value)} />
                   </SearchInput>

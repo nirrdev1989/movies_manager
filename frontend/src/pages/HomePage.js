@@ -6,8 +6,8 @@ import { useHistory } from 'react-router';
 // import { authForm } from "../data/forms.config";
 
 
-export default function HomePage() {
-   const history = useHistory()
+export default function HomePage({ history }) {
+   // const history = useHistory()
    // console.log(history)
    return (
       <CentredContainer pos="80vh">

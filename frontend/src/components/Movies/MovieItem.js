@@ -7,8 +7,8 @@ import MyLink from '../components-utils/MyLink'
 import NavigateButton from '../components-utils/NavigateButton'
 // import styled from 'styled-components'
 
-export default function MovieItem({ movie, onDelete, index, currentUser }) {
-
+export default function MovieItem({ movie, onDelete, index, currentUser, match }) {
+   console.log(match)
    return (
       <CardWrapper key={movie.movieName}>
          <Card width="300px" height="270px" >

@@ -1,33 +1,19 @@
-import React from 'react'
-import { useHistory, useRouteMatch } from 'react-router'
 import styled from 'styled-components'
 import NavigateButton from '../components/components-utils/NavigateButton'
+import { useRenderContent } from '../hooks/renderContent'
 import { RenderRoutes } from '../router/Routes'
 
 
-export default function SubscriptionsPage({ childrenRoutes, currentUser }) {
-   const { url } = useRouteMatch()
-   const history = useHistory()
-
-   const [renderNav, setRenderNav] = React.useState(true)
-
-   React.useEffect(() => {
-      let pathName = history.location.pathname
-
-      if (pathName.includes('edit_member') || pathName.includes('add_member')) {
-         setRenderNav(() => false)
-      }
-      return () => {
-         setRenderNav(() => true)
-      }
-   }, [history.location.pathname])
+function SubscriptionsPage({ childrenRoutes, currentUser, history, match }) {
+   const pathname = history.location.pathname
+   const [render] = useRenderContent(pathname.includes('edit_member') || pathname.includes('add_member'), pathname)
 
    return (
       <div>
-         {renderNav &&
+         {render &&
             <Navbar>
-               <NavigateButton content="All Members" url={`${url}/all`} />
-               {currentUser.premissions.includes('add members') && <NavigateButton content="Add Member" url={`${url}/add_member`} />}
+               <NavigateButton content="All Members" url={`${match.url}/all`} />
+               {currentUser.premissions.includes('add members') && <NavigateButton content="Add Member" url={`${match.url}/add_member`} />}
             </Navbar>
          }
          <RenderRoutes routes={childrenRoutes} />
@@ -35,6 +21,7 @@ export default function SubscriptionsPage({ childrenRoutes, currentUser }) {
    )
 }
 
+export default SubscriptionsPage
 
 const Navbar = styled.div`
    width: 100%;

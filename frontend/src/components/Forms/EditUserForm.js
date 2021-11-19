@@ -1,7 +1,6 @@
 import { useParams } from 'react-router'
 import { premissions } from '../../data/data'
 import useForm from '../../hooks/useForm'
-import { formatDateForInput } from '../../utils/dates'
 import Button from '../components-utils/Button'
 import NavigateButton from '../components-utils/NavigateButton'
 import { FormControlS } from '../../styles/FormControl'
@@ -10,9 +9,10 @@ import { CentredContainer } from "../../styles/Containers";
 import { connect } from 'react-redux'
 import { addUserAction, updateUserAction } from '../../redux/users/actions'
 import { useEffect } from 'react'
+import { formatDateForInput } from '../../utils/dates'
 
 
-function EditUserForm({ isEdit, addUser, loading, users, updateUser }) {
+function EditUserForm({ isEdit, addUser, users, updateUser }) {
    const params = useParams()
 
    const { state, setState, onSubmit, onChange } = useForm({
@@ -20,7 +20,7 @@ function EditUserForm({ isEdit, addUser, loading, users, updateUser }) {
       lastName: '',
       userName: '',
       email: '',
-      createdDate: "11/13/2009",
+      createdDate: "",
       sessionTimeOut: '',
       premissions: []
    }, callback)
@@ -56,7 +56,9 @@ function EditUserForm({ isEdit, addUser, loading, users, updateUser }) {
 
    useEffect(() => {
       if (isEdit) {
-         setState(() => users[Number(params.id)])
+         const user = users[Number(params.id)]
+         user.createdDate = formatDateForInput(user.createdDate)
+         setState(() => user)
       }
    }, [])
 

@@ -1,33 +1,20 @@
 import React from 'react'
 import NavigateButton from '../components/components-utils/NavigateButton'
-import { useRouteMatch, withRouter, useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { RenderRoutes } from '../router/Routes'
+import { useRenderContent } from '../hooks/renderContent'
 
 
-function UsersMangePage({ childrenRoutes }) {
-   const { url } = useRouteMatch()
-   const history = useHistory()
-
-   const [renderNav, setRenderNav] = React.useState(true)
-
-   React.useEffect(() => {
-      let pathName = history.location.pathname
-
-      if (pathName.includes('edit_user') || pathName.includes('add_user')) {
-         setRenderNav(() => false)
-      }
-      return () => {
-         setRenderNav(() => true)
-      }
-   }, [history.location.pathname])
+function UsersMangePage({ childrenRoutes, history, match }) {
+   const pathname = history.location.pathname
+   const [render] = useRenderContent(pathname.includes('edit_user') || pathname.includes('add_user'), pathname)
 
    return (
       <div>
-         {renderNav &&
+         {render &&
             <Navbar >
-               <NavigateButton content="All Users" url={`${url}/all`} />
-               <NavigateButton content="Add User" url={`${url}/add_user`} />
+               <NavigateButton content="All Users" url={`${match.url}/all`} />
+               <NavigateButton content="Add User" url={`${match.url}/add_user`} />
             </Navbar>
          }
          <RenderRoutes routes={childrenRoutes} />
@@ -36,7 +23,7 @@ function UsersMangePage({ childrenRoutes }) {
 }
 
 
-export default withRouter(UsersMangePage)
+export default UsersMangePage
 
 const Navbar = styled.div`
    width: 100%;

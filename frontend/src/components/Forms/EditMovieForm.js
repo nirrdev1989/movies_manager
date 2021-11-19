@@ -7,8 +7,8 @@ import NavigateButton from '../components-utils/NavigateButton'
 import { useParams } from 'react-router'
 import { addMovieAction, updateMovieAction } from '../../redux/movies/actions'
 import { connect } from 'react-redux'
-import { formatDateForInput } from '../../utils/dates'
 import { useEffect } from 'react'
+// import { formatDateForInput } from '../../utils/dates'
 
 
 function EditMovieForm({ isEdit, movies, addMovie, updateMovie }) {
