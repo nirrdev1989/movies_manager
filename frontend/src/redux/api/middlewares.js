@@ -1,15 +1,6 @@
-// import { showAlertAction } from "../ui/alert/actions"
-// import { httpCall } from '../../utils/http'
-// import { API_ACTIONS_TYPES } from "./actions.types"
-// import { USERS_ACTIONS_TYPES } from "../users/actions.types"
-// import { MOVIES_ACTIONS_TYPES } from "../movies/actions.types"
-// import { AUTH_ACTIONS_TYPES } from "../auth/actions.types"
 import axios from 'axios'
-import { toast } from 'react-toastify';
-import { errorToast } from '../../utils/toast';
 import { loaderStatusAction } from '../loader/actions';
-import { LOADER_ACTIONS_TYPES } from '../loader/actions.types';
-
+import { options } from "../../utils/http";
 const AUTH_ACTIONS_TYPES = {
    AUTH_REGISTER_START: 'AUTH_REGISTER_START',
    AUTH_USER_START: 'AUTH_USER_START',
@@ -17,13 +8,6 @@ const AUTH_ACTIONS_TYPES = {
    AUTH_LOGOUT_START: 'AUTH_LOGOUT_START'
 }
 
-const options = {
-   withCredentials: true,
-   headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-   },
-}
 
 export function apiMiddeleware({ dispatch }) {
    return function (next) {
@@ -31,7 +15,7 @@ export function apiMiddeleware({ dispatch }) {
          // console.log(action)
 
          if (AUTH_ACTIONS_TYPES[action.type]) {
-            const { successAction, errorAction, redirect, displyToastError, globalLoader } = action
+            const { successAction, errorAction, redirect, globalLoader } = action
 
             if (globalLoader) {
                dispatch(loaderStatusAction(true))

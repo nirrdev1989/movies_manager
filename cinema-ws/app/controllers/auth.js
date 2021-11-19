@@ -1,8 +1,9 @@
-const { getUser } = require("../data.access.logic/json-files/json.users");
+const { getUserJson } = require("../data.access.logic/json-files/json.users");
 const { UserModel } = require("../db/models/users");
 const { catchAsync } = require("../utils/asyncWrapper");
 const { responseWithToken } = require("../utils/response.with.token");
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const { comparePassword, hashPassword } = require("../utils/hashPassword");
 
 exports.login = catchAsync(async function (request, response, next) {
 
@@ -19,13 +20,13 @@ exports.login = catchAsync(async function (request, response, next) {
       return next(new Error('Please create your password'))
    }
 
-   const isMatch = await bcrypt.compare(password, foundUser.password)
+   const isMatch = await comparePassword(password, foundUser.password)
 
    if (!isMatch) {
       return next(new Error('Auth fail'))
    }
 
-   const user = await getUser(foundUser._id)
+   const user = await getUserJson(foundUser._id)
 
    return responseWithToken(user, response)
 })
@@ -34,16 +35,13 @@ exports.register = catchAsync(async function (request, response, next) {
 
    const { userName, password } = request.body
 
-
    const foundUser = await UserModel.findOne({ userName: userName })
 
    if (!foundUser) {
       return next(new Error('User not exsit'))
    }
 
-   const hashPassword = await bcrypt.hash(password, 10)
-
-   foundUser.password = hashPassword
+   foundUser.password = await hashPassword(password)
 
    const userSaved = await foundUser.save()
 
@@ -73,5 +71,10 @@ exports.logout = async function (request, response, next) {
 }
 
 exports.isAuth = function (request, response, next) {
-   responseWithToken(request.userData, response)
+   // responseWithToken(request.userData, response)
+   response.status(201).send({
+      data: request.userData,
+      message: 'Auth success',
+      success: true,
+   })
 }

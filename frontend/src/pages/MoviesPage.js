@@ -66,6 +66,7 @@ const NavbarLeft = styled.div`
    > button {
       width: 100px;
       height: 40px;
+      /* background-color: transparent; */
    }
 `
 

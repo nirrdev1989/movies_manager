@@ -24,6 +24,12 @@ export default function moviesReducer(state = INITIAL_STATE, action) {
          return {
             ...state
          }
+
+      case MOVIES_ACTIONS_TYPES.RESET_MOVIES_ARRAY:
+         return {
+            ...state,
+            movies: null
+         }
       case MOVIES_ACTIONS_TYPES.GET_MOVIES_SUCCESS:
          return {
             movies: action.payload

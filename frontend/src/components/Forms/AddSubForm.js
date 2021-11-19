@@ -27,7 +27,7 @@ function AddSubForm({ member, movies, getMovies, addSub }) {
 
    return (
       <form onSubmit={onSubmit} >
-         <h5 style={{ textAlign: 'center' }} >Subscribe Movie</h5>
+         <h5 style={{ textAlign: 'center', marginBottom: '1rem', marginTop: '1rem' }} >Subscribe Movie</h5>
          <select
             style={{ height: '30px', marginBottom: '0.5rem' }}
             type="text"
@@ -58,7 +58,7 @@ function AddSubForm({ member, movies, getMovies, addSub }) {
                required={true}
             />
          </FormControlS>
-         <Button type="submit" bg="rgb(34, 238, 170)" content="Add" />
+         <Button type="submit" color="green" bg="whitesmoke" content="Add" />
       </form>
    )
 }

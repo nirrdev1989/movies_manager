@@ -6,7 +6,7 @@ import { deleteMemberAction, getMembersAction } from '../../redux/members/action
 import MemberItem from './MemberItem'
 
 
-function MembersList({ loading, getMembers, members, deleteMember, currentUser }) {
+function MembersList({ getMembers, members, deleteMember, currentUser }) {
    const { id } = useParams()
 
    function onDelete(id) {
@@ -19,18 +19,22 @@ function MembersList({ loading, getMembers, members, deleteMember, currentUser }
       }
    }, [])
 
+   function renderMemberItem(member, i) {
+      return <MemberItem key={member._id} onDelete={onDelete} member={member} index={i} currentUser={currentUser} />
+   }
+
    return (
       <Container>
          {members && members.map((member, i) => {
             if (id) {
                if (id === member._id) {
-                  <MemberItem key={member._id} onDelete={onDelete} member={member} index={i} currentUser={currentUser} />
+                  renderMemberItem(member, i)
                } else {
                   return null
                }
             }
             return (
-               <MemberItem key={member._id} member={member} onDelete={onDelete} index={i} currentUser={currentUser} />
+               renderMemberItem(member, i)
             )
          })}
       </Container>

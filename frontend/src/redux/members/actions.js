@@ -51,10 +51,9 @@ export function deleteMemberAction(id) {
       try {
          const result = await httpCall.delete('http://localhost:6789/api/members/delete/' + id)
 
-         // dispatch({
-         //    type: MOVIES_ACTIONS_TYPES.DELETE_MEMBER_FROM_MOVIES,
-         //    payload: id
-         // })
+         dispatch({
+            type: MOVIES_ACTIONS_TYPES.RESET_MOVIES_ARRAY,
+         })
 
          dispatch({
             type: MEMBERS_ACTIONS_TYPES.DELETE_MEMBER_SUCCESS,
@@ -72,6 +71,10 @@ export function updateMemberAction(id, data, index) {
       // dispatch({ type: MEMBERS_ACTIONS_TYPES.UPDATE_USER_START })
       try {
          const result = await httpCall.put('http://localhost:6789/api/members/update/' + id, data)
+
+         dispatch({
+            type: MOVIES_ACTIONS_TYPES.RESET_MOVIES_ARRAY,
+         })
 
          dispatch({
             type: MEMBERS_ACTIONS_TYPES.UPDATE_MEMBER_SUCCESS,

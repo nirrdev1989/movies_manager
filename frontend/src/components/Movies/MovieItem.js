@@ -1,14 +1,14 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
 import { deleteIcon, editIcon } from '../../icons'
 import { CardWrapper, Card, CardBody, CardFooter, CardHeader } from '../../styles/Card'
+import { SubsListContainer } from '../../styles/Lists'
 import Button from '../components-utils/Button'
+import MyLink from '../components-utils/MyLink'
 import NavigateButton from '../components-utils/NavigateButton'
+// import styled from 'styled-components'
 
 export default function MovieItem({ movie, onDelete, index, currentUser }) {
 
-   console.log(currentUser.premissions.includes('edit movies'))
    return (
       <CardWrapper key={movie.movieName}>
          <Card width="300px" height="270px" >
@@ -21,16 +21,19 @@ export default function MovieItem({ movie, onDelete, index, currentUser }) {
                   <div style={{ width: '50%' }}>
                      <img src={movie.imageUrl} width="100" height="120" />
                   </div>
-                  {movie.movieSubs.length > 0 &&
-                     <SubsListContainer>
-                        <ul>
-                           {movie.movieSubs.map((sub) => {
-                              return <li><Link to={`/main/subscriptions/${sub._id}`} key={sub._id + 1}> {sub.memberName} </Link></li>
-                           })}
-                        </ul>
-                     </SubsListContainer>}
+                  <div>
+                     <span>Subscribers</span>
+                     {movie.movieSubs.length > 0 ?
+                        <SubsListContainer maxHeight={'100px'}>
+                           <ul>
+                              {movie.movieSubs.map((sub) => {
+                                 return <li><MyLink key={sub._id + 1} content={sub.memberName} to={`/main/subscriptions/${sub._id}`} click={currentUser.premissions.includes('view members')} /> </li>
+                              })}
+                           </ul>
+                        </SubsListContainer> : <p>No subscribers yet</p>}
+                  </div>
                </div>
-               <h6 className="card-subtitle mt-2  text-muted">Genres: {JSON.stringify(movie.genres)} </h6>
+               <h6 className="card-subtitle mt-2  text-muted">Genres: {movie.genres.map((gen, i) => i === movie.genres.length - 1 ? gen : gen + ', ')}</h6>
             </CardBody>
             <CardFooter>
                {currentUser.premissions.includes('edit movies') && <NavigateButton content={editIcon} url={`/main/movies/edit_movie/${index}`} />}
@@ -40,23 +43,3 @@ export default function MovieItem({ movie, onDelete, index, currentUser }) {
       </CardWrapper>
    )
 }
-
-
-export const SubsListContainer = styled.div` 
-    margin-top: 0.5rem;
-    width: 90%;
-    max-height: 100px;
-    overflow-x: hidden;
-    ::-webkit-scrollbar {
-      width: 7px;
-   }
-   ::-webkit-scrollbar-track {
-      background: #f1f1f1;
-   }
-   ::-webkit-scrollbar-thumb {
-      background: #888;
-   }
-   ::-webkit-scrollbar-thumb:hover {
-      background: #555;
-   }
-  `

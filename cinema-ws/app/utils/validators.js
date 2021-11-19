@@ -2,8 +2,6 @@ const { check } = require('express-validator')
 
 const errorMessage = 'INVALID VALUES'
 
-
-
 module.exports = {
    email: function (property) {
       return check(property, errorMessage)

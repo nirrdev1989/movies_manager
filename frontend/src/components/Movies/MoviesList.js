@@ -6,7 +6,7 @@ import MovieItem from './MovieItem'
 import { useHistory, useParams } from 'react-router'
 // import Loader from '../Loader/Loader'
 
-function MoviesList({ loading, getMovies, movies, deleteMovie, currentUser }) {
+function MoviesList({ getMovies, movies, deleteMovie, currentUser }) {
    const history = useHistory()
    const { id } = useParams()
 
@@ -21,6 +21,10 @@ function MoviesList({ loading, getMovies, movies, deleteMovie, currentUser }) {
       }
    }, [])
 
+   function renderMovieItem(movie, i) {
+      return <MovieItem key={movie._id} onDelete={onDelete} movie={movie} index={i} currentUser={currentUser} />
+   }
+
    return (
       <Container>
          {movies && movies.map((movie, i) => {
@@ -30,7 +34,7 @@ function MoviesList({ loading, getMovies, movies, deleteMovie, currentUser }) {
 
                if (lowerMovieName.includes(lowerSearchParam)) {
                   return (
-                     <MovieItem key={movie._id} onDelete={onDelete} movie={movie} index={i} currentUser={currentUser} />
+                     renderMovieItem(movie, i)
                   )
                } else {
                   return null
@@ -38,13 +42,13 @@ function MoviesList({ loading, getMovies, movies, deleteMovie, currentUser }) {
             }
             else if (id) {
                if (id === movie._id) {
-                  <MovieItem key={movie._id} onDelete={onDelete} movie={movie} index={i} currentUser={currentUser} />
+                  renderMovieItem(movie, i)
                } else {
                   return null
                }
             }
             return (
-               <MovieItem key={movie._id} onDelete={onDelete} movie={movie} index={i} currentUser={currentUser} />
+               renderMovieItem(movie, i)
             )
          })}
       </Container>

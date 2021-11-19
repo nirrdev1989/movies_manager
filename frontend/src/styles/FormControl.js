@@ -16,4 +16,7 @@ export const FormControlS = styled.div`
    > input {
       border-radius: 0;
    }
+   >select {
+      border-radius: 0;
+   }
 `

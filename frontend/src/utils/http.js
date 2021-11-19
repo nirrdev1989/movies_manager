@@ -6,7 +6,7 @@ const BASE_URL = 'http://localhost:6789/api/'
 
 
 
-const options = {
+export const options = {
    withCredentials: true,
    headers: {
       'Accept': 'application/json',
@@ -19,7 +19,6 @@ Axios.interceptors.request.use((request) => {
 
    return request
 }, (error) => {
-
    return Promise.reject(error)
 })
 

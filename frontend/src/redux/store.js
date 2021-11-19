@@ -7,6 +7,7 @@ import loaderReducer from "./loader/reducer";
 import { apiMiddeleware } from "./api/middlewares";
 import membersReducer from "./members/reducer";
 import modalReducer from "./modal/reducer";
+import { setSessionTime } from "./auth/middlewares";
 // import { logger } from "redux-logger";
 
 const rootReducer = combineReducers({
@@ -19,7 +20,7 @@ const rootReducer = combineReducers({
 
 })
 
-const middaleWares = [apiMiddeleware, thunk]
+const middaleWares = [apiMiddeleware, thunk, setSessionTime]
 
 
 

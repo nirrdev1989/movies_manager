@@ -19,7 +19,11 @@ code {
 }
 
 input[type="search"] {
-
   background-color : transparent; 
-
 }
+
+.form_control {
+  border-radius: 0;
+}
+
+

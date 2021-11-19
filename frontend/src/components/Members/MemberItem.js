@@ -7,12 +7,13 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { addSubAction } from '../../redux/subs/actions'
 import Modal from '../Modal/Modal'
-import { Link } from 'react-router-dom'
 import AddSubForm from '../Forms/AddSubForm'
+import { SubsListContainer } from '../../styles/Lists'
+import MyLink from '../components-utils/MyLink'
 
 function MemberItem({ member, onDelete, index, currentUser }) {
    const [showModal, setShowModal] = useState(false)
-   console.log(currentUser.premissions.includes('edit subs'))
+
    return (
       <CardWrapper>
          <Modal show={showModal} closeModal={() => setShowModal(false)} >
@@ -33,10 +34,10 @@ function MemberItem({ member, onDelete, index, currentUser }) {
                </AddSubContainer>
 
                {member?.memberMovies.length > 0 &&
-                  <SubsListContainer>
+                  <SubsListContainer maxHeight={'100px'}>
                      <ul>
                         {member.memberMovies.map((movie) => {
-                           return <li><Link to={`/main/movies/${movie._id}`} key={movie._id + 1}> {movie.movieName} </Link></li>
+                           return <li> <MyLink key={movie._id + 1} content={movie.movieName} to={`/main/movies/${movie._id}`} click={currentUser.premissions.includes('view movies')} /></li>
                         })}
                      </ul>
                   </SubsListContainer>}
@@ -74,23 +75,4 @@ export const AddSubHeader = styled.div`
      font-size: 13px;
      /* height: 25px; */
   }
-  `
-
-export const SubsListContainer = styled.div` 
-    margin-top: 0.5rem;
-    width: 90%;
-    max-height: 100px;
-    overflow-x: hidden;
-    ::-webkit-scrollbar {
-      width: 7px;
-   }
-   ::-webkit-scrollbar-track {
-      background: #f1f1f1;
-   }
-   ::-webkit-scrollbar-thumb {
-      background: #888;
-   }
-   ::-webkit-scrollbar-thumb:hover {
-      background: #555;
-   }
   `

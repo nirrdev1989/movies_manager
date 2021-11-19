@@ -7,7 +7,6 @@ async function addUserJson(user) {
    try {
       const data = await readFile(jsonUsersPath)
       data.users[user._id] = user
-      console.log(data)
 
       await wirteFile(jsonUsersPath, data)
 
@@ -51,7 +50,6 @@ async function deleteUserJson(id) {
 }
 
 async function getUsersJson() {
-   // console.log('GET USERS JSON FUNCTION')
    try {
       const [usersData, premmisionsData] = await Promise.all(
          [readFile(jsonUsersPath), readFile(jsonPremmisionsPath)]
@@ -66,7 +64,6 @@ async function getUsersJson() {
          })
       }
 
-      console.log(data)
       return data
    } catch (error) {
       throw new Error('Error')
@@ -83,7 +80,6 @@ async function updateUserJson(id, data) {
 
       const { premissions, ...rest } = data
 
-      // console.log(premissions, rest)
 
       usersData.users[id] = {
          _id: id,
@@ -108,12 +104,12 @@ async function updateUserJson(id, data) {
 }
 
 
-async function getUser(id) {
+async function getUserJson(id) {
    try {
       const [usersData, premmisionsData] = await Promise.all(
          [readFile(jsonUsersPath), readFile(jsonPremmisionsPath)]
       )
-      console.log(usersData, usersData)
+
       const user = {
          ...usersData.users[id],
          ...premmisionsData.premissions[id]
@@ -131,5 +127,5 @@ module.exports = {
    getUsersJson,
    deleteUserJson,
    updateUserJson,
-   getUser
+   getUserJson
 }

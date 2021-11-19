@@ -1,5 +1,6 @@
 import history from '../../hooks/router.history'
 import { httpCall } from '../../utils/http'
+import { MEMBERS_ACTIONS_TYPES } from '../members/actions.types'
 import { MOVIES_ACTIONS_TYPES } from './actions.types'
 
 
@@ -34,6 +35,10 @@ export function deleteMovieAction(id) {
          const result = await httpCall.delete('http://localhost:6789/api/movies/delete/' + id)
 
          dispatch({
+            type: MEMBERS_ACTIONS_TYPES.RESET_MEMBERS_ARRAY,
+         })
+
+         dispatch({
             type: MOVIES_ACTIONS_TYPES.DELETE_MOVIE_SUCCESS,
             payload: id
          })
@@ -48,6 +53,10 @@ export function updateMovieAction(id, data, index) {
       // dispatch({ type: MOVIES_ACTIONS_TYPES.UPDATE_USER_START })
       try {
          const result = await httpCall.put('http://localhost:6789/api/movies/update/' + id, data)
+
+         dispatch({
+            type: MEMBERS_ACTIONS_TYPES.RESET_MEMBERS_ARRAY,
+         })
 
          dispatch({
             type: MOVIES_ACTIONS_TYPES.UPDATE_MOVIE_SUCCESS,

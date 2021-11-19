@@ -4,12 +4,16 @@ const jsonWebToken = require('jsonwebtoken')
 
 exports.responseWithToken = function (data, response) {
    console.log('TOKEN DATA: ', data)
+   const expiresIn = 1000 * 60 * Number(data.sessionTimeOut)
+   data.expiresIn = expiresIn
+
+   console.log('EXPIRED IN: ', expiresIn)
    const token = jsonWebToken.sign({ userData: data }, config.TOKENS.ACCESS_TOKEN.secretTokenKey, {
-      expiresIn: '1h'
+      expiresIn: expiresIn
    })
 
    let cookieOptions = {
-      expires: new Date(Date.now() + (1 * 1000 * 60 * 60)),
+      expires: new Date(Date.now() + expiresIn),
       httpOnly: true,
       sameSite: 'strict'
    }
@@ -20,9 +24,10 @@ exports.responseWithToken = function (data, response) {
 
    response.cookie('jwt', token, cookieOptions)
 
+
    response.status(201).send({
       data: data,
-      message: 'OK',
+      message: 'Auth success',
       success: true,
    })
 }

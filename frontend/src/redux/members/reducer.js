@@ -17,6 +17,11 @@ export default function membersReducer(state = INITIAL_STATE, action) {
          return {
             ...state
          }
+      case MEMBERS_ACTIONS_TYPES.RESET_MEMBERS_ARRAY:
+         return {
+            ...state,
+            members: null
+         }
       case MEMBERS_ACTIONS_TYPES.GET_MEMBERS_START:
          return state
       case MEMBERS_ACTIONS_TYPES.GET_MEMBERS_SUCCESS:
