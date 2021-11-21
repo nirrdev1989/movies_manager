@@ -9,6 +9,7 @@ import Loader from "../components/Loader/Loader";
 import SubscriptionsPage from "../pages/SubscriptionsPage";
 import MembersList from "../components/Members/MembersList";
 import EditSubPage from "../pages/EditSubPage";
+import ChangePasswordFrom from "../components/Forms/ChangePasswordFrom";
 // import { lazy } from "react";
 // component: lazy(() => import('../pages/HomePage')),
 
@@ -48,6 +49,15 @@ export const routesConfig = [
       exact: false,
       fallback: <Loader />,
       children: [
+         {
+            key: 'MAIN_CHANGE_PASSWORD',
+            path: '/main/change_password',
+            // redirect: '/main/users/all',
+            component: ChangePasswordFrom,
+            private: true,
+            exact: false,
+            fallback: <Loader />,
+         },
          {
             key: 'MAIN_USERS',
             path: '/main/users',

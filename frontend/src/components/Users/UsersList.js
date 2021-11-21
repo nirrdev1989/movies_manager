@@ -17,7 +17,7 @@ function UsersList({ loading, getUsers, users, deleteUser }) {
          getUsers()
       }
    }, [])
-
+   console.log(users)
    return (
       <Container>
          {users && users.map((user, i) => {

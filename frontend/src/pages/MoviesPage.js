@@ -64,6 +64,7 @@ const SearchInput = styled.div`
    align-items: center;
    border-bottom: 2px solid black;
    background-color: none;
+   margin-left: 1rem;
    > input {
       border: none;
    }

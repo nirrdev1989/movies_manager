@@ -33,6 +33,10 @@ export default function usersReducer(state = INITIAL_STATE, action) {
          }
       case USERS_ACTIONS_TYPES.UPADTE_USER_FAIL:
          return state
+      case USERS_ACTIONS_TYPES.CHANGE_PASSWORD_USER_SUCCESS:
+         return state
+      case USERS_ACTIONS_TYPES.CHANGE_PASSWORD_USER_FAIL:
+         return state
       default:
          return state
    }

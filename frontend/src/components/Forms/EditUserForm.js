@@ -27,8 +27,10 @@ function EditUserForm({ isEdit, addUser, users, updateUser }) {
 
    function callback(values) {
       if (isEdit) {
+         console.log(values)
          updateUser(values._id, values, Number(params.id))
       } else {
+         values.createdDate = new Date().toLocaleDateString()
          addUser(values)
       }
    }
@@ -58,6 +60,7 @@ function EditUserForm({ isEdit, addUser, users, updateUser }) {
       if (isEdit) {
          const user = users[Number(params.id)]
          user.createdDate = formatDateForInput(user.createdDate)
+         console.log(user)
          setState(() => user)
       }
    }, [])

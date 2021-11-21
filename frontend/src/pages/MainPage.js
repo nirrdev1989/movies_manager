@@ -4,6 +4,7 @@ import { RenderRoutes } from '../router/Routes'
 import Button from '../components/components-utils/Button'
 import { connect } from 'react-redux'
 import { logoutActionStart } from '../redux/auth/actions'
+import MyLink from '../components/components-utils/MyLink'
 
 
 function MainPage({ childrenRoutes, logout, currentUser, history, match }) {
@@ -19,10 +20,14 @@ function MainPage({ childrenRoutes, logout, currentUser, history, match }) {
                </NavbarLeft>
                <NavbarRight>
                   <UserLoged>{currentUser.firstName + ' ' + currentUser.lastName}</UserLoged>
+                  {/* <NavigateButton url={`${match.url}/change_password`} content="Change password" /> */}
                   <Button style={{ width: '100px' }} handler={() => logout()} bg={"whitesmoke"} content="Logout" />
                </NavbarRight>
             </Navbar>
             <hr />
+            <SubNavbar>
+               <MyLink to={`${match.url}/change_password`} content="Change password" click={true} />
+            </SubNavbar>
          </NavContainer>
 
          <MainContainer >
@@ -72,7 +77,7 @@ const NavbarLeft = styled.div`
 `
 
 const NavbarRight = styled.div`
-   width: 35%;
+   width: 40%;
    display: flex;
    align-items: center;
    justify-content: flex-end;
@@ -89,6 +94,12 @@ const MainContainer = styled.div`
 `
 
 const MainImgContainer = styled.div`
-   width: 100%
+   width: 100%;
 `
+
+const SubNavbar = styled.div`
+   width: 100%;
+   display: flex;
+   justify-content: flex-end;
+ `
 

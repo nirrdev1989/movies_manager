@@ -2,7 +2,6 @@ const { getUserJson } = require("../data.access.logic/json-files/json.users");
 const { UserModel } = require("../db/models/users");
 const { catchAsync } = require("../utils/asyncWrapper");
 const { responseWithToken } = require("../utils/response.with.token");
-const bcrypt = require('bcrypt');
 const { comparePassword, hashPassword } = require("../utils/hashPassword");
 
 exports.login = catchAsync(async function (request, response, next) {
@@ -31,6 +30,7 @@ exports.login = catchAsync(async function (request, response, next) {
    return responseWithToken(user, response)
 })
 
+
 exports.register = catchAsync(async function (request, response, next) {
 
    const { userName, password } = request.body
@@ -41,11 +41,14 @@ exports.register = catchAsync(async function (request, response, next) {
       return next(new Error('User not exsit'))
    }
 
+   if (foundUser['password']) {
+      return next(new Error('You allready create a password please log in to change password'))
+   }
+
    foundUser.password = await hashPassword(password)
 
    const userSaved = await foundUser.save()
 
-   console.log(userSaved)
    response.status(200).send({
       success: true,
       message: 'Register Success',

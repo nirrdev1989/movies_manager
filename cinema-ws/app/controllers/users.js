@@ -1,6 +1,7 @@
 const { getUsersJson, addUserJson, addPremmisionsJson, deleteUserJson, updateUserJson } = require("../data.access.logic/json-files/json.users");
 const { UserModel } = require("../db/models/users");
 const { catchAsync } = require("../utils/asyncWrapper");
+const { comparePassword, hashPassword } = require("../utils/hashPassword");
 
 
 exports.allUsers = catchAsync(async function (request, response, next) {
@@ -80,5 +81,32 @@ exports.updateUser = catchAsync(async function (request, response, next) {
       success: true,
       message: 'Update user Success',
       data: id
+   })
+})
+
+exports.changePassword = catchAsync(async function (request, response, next) {
+
+   const { oldPassword, newPassword } = request.body
+
+   const foundUser = await UserModel.findOne({ _id: request.userData._id })
+   // console.log(foundUser)
+   if (!foundUser) {
+      return next(new Error('Auth fail'))
+   }
+
+   const isMatch = await comparePassword(oldPassword, foundUser.password)
+
+   if (!isMatch) {
+      return next(new Error('Wrong password'))
+   }
+
+   foundUser.password = await hashPassword(newPassword)
+
+   await foundUser.save()
+
+   response.status(200).send({
+      success: true,
+      message: 'Change password success',
+      data: null
    })
 })

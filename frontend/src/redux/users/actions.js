@@ -13,13 +13,30 @@ export function addUserAction(data) {
             type: USERS_ACTIONS_TYPES.ADD_USER_SUCCESS,
             payload: {
                ...data,
-               _id: result.data.data
+               _id: result.data
             }
          })
 
          history.goBack()
       } catch (error) {
          dispatch({ type: USERS_ACTIONS_TYPES.ADD_USER_FAIL, payload: error })
+      }
+   }
+}
+
+export function changePasswordAction(data) {
+   return async function (dispatch) {
+      // dispatch({ type: USERS_ACTIONS_TYPES.ADD_USER_START })
+      try {
+         const result = await httpCall.post('http://localhost:6789/api/users/change_password', data)
+
+         dispatch({
+            type: USERS_ACTIONS_TYPES.CHANGE_PASSWORD_USER_SUCCESS,
+         })
+
+         history.goBack()
+      } catch (error) {
+         dispatch({ type: USERS_ACTIONS_TYPES.CHANGE_PASSWORD_USER_FAIL, payload: error })
       }
    }
 }
