@@ -30,10 +30,10 @@ exports.createOne = function (Model) {
 
       const itemSaved = await newItem.save()
 
-      console.log('CREATE ONE: ', itemSaved)
+      console.log(`CREATE ONE: ${Model.collection.collectionName} `, itemSaved)
 
       response.status(201).send({
-         message: 'Create success',
+         message: `Create success ${Model.collection.collectionName} `,
          success: true,
          data: itemSaved._id
       })
@@ -52,10 +52,10 @@ exports.deleteOne = function (Model) {
          return
       }
 
-      console.log('DELETE ONE: ', deletedItem)
+      console.log(`DELETE ONE: ${Model.collection.collectionName} `, deletedItem)
 
       response.status(200).send({
-         message: 'Delete success',
+         message: `Delete success ${Model.collection.collectionName} `,
          success: true,
          data: id
       })
@@ -76,10 +76,10 @@ exports.updateOne = function (Model) {
          return
       }
 
-      console.log('UPDATE ONE: ', updatedItem)
+      console.log(`UPDATE ONE: ${Model.collection.collectionName} `, updatedItem)
 
       response.status(200).send({
-         message: 'Update success',
+         message: `Update success ${Model.collection.collectionName} `,
          success: true,
          data: id
       })
