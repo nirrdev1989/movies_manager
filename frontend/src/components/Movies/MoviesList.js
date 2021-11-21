@@ -3,13 +3,11 @@ import styled from 'styled-components'
 import { deleteMovieAction, getMoviesAction } from '../../redux/movies/actions'
 import { connect } from 'react-redux'
 import MovieItem from './MovieItem'
-import { useHistory, useParams } from 'react-router'
+import { useParams } from 'react-router'
 // import Loader from '../Loader/Loader'
 
-function MoviesList({ getMovies, movies, deleteMovie, currentUser }) {
-   const history = useHistory()
+function MoviesList({ getMovies, movies, deleteMovie, currentUser, history }) {
    const { id } = useParams()
-
 
    function onDelete(id) {
       deleteMovie(id)
@@ -36,16 +34,14 @@ function MoviesList({ getMovies, movies, deleteMovie, currentUser }) {
                   return (
                      renderMovieItem(movie, i)
                   )
-               } else {
-                  return null
                }
+               return null
             }
             else if (id) {
                if (id === movie._id) {
-                  renderMovieItem(movie, i)
-               } else {
-                  return null
+                  return renderMovieItem(movie, i)
                }
+               return null
             }
             return (
                renderMovieItem(movie, i)

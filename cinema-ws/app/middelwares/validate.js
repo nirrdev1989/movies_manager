@@ -5,7 +5,7 @@ async function validate(request, response, next) {
 
    const errors = validationResult(request)
 
-   //  console.log(errors)
+   console.log(errors)
 
    if (!errors.isEmpty()) {
       return response.status(400).send({

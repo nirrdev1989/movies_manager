@@ -20,14 +20,16 @@ export const Card = styled.div`
 `
 export const CardHeader = styled.div`
   width: 100%;
-  height: 20%;
+  /* height: 20%; */
+  height: auto;
 `
 
 export const CardBody = styled.div`
   width: 100%;
-  height: 60%;
+  /* height: 70%; */
+  height: ${(props) => props.height};
   /* align-items: center; */
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   display: flex;
   flex-direction: column;
 `

@@ -28,10 +28,9 @@ function MembersList({ getMembers, members, deleteMember, currentUser }) {
          {members && members.map((member, i) => {
             if (id) {
                if (id === member._id) {
-                  renderMemberItem(member, i)
-               } else {
-                  return null
+                  return renderMemberItem(member, i)
                }
+               return null
             }
             return (
                renderMemberItem(member, i)

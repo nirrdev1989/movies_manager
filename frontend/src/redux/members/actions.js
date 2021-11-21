@@ -2,6 +2,7 @@ import { httpCall } from "../../utils/http"
 import { MEMBERS_ACTIONS_TYPES } from "./actions.types"
 import history from '../../hooks/router.history'
 import { MOVIES_ACTIONS_TYPES } from "../movies/actions.types"
+import { convertArrayToObject } from "../../utils/converts"
 
 
 
@@ -11,6 +12,8 @@ export function getMembersAction() {
       // dispatch({ type: MEMBERS_ACTIONS_TYPES.GET_MOVIES_START })
       try {
          const result = await httpCall.get('http://localhost:6789/api/members/all')
+
+         convertArrayToObject(result.data, '_id')
 
          dispatch({
             type: MEMBERS_ACTIONS_TYPES.GET_MEMBERS_SUCCESS,

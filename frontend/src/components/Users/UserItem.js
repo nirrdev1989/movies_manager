@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 import { deleteIcon, editIcon } from '../../icons'
 import { CardWrapper, Card, CardBody, CardFooter, CardHeader } from '../../styles/Card'
 import { SubsListContainer } from '../../styles/Lists'
@@ -10,17 +11,17 @@ import NavigateButton from '../components-utils/NavigateButton'
 export default function UserItem({ user, onDelete, index }) {
    return (
       <CardWrapper>
-         <Card width="300px" height="300px" >
+         <Card width="300px" height="340px" >
             <CardHeader>
-               <h5 className="card-title">Name: {user.firstName + ' ' + user.lastName}</h5>
-               <h6 className="card-subtitle mb-2 text-muted">User Name: {user.userName}</h6>
+               <h6 className="card-title">{user.firstName + ' ' + user.lastName}</h6>
+               <hr />
             </CardHeader>
-            <CardBody>
-               <span>Session Time Out: {user.sessionTimeOut}</span>
-               <span>Created Data: {user.createdDate}</span>
-               {/* <span>Premmisions: {JSON.stringify(user.premissions)}</span> */}
-               Premmisions:
-               <SubsListContainer maxHeight={'150px'}>
+            <CardBody height="70%">
+               <PropSpan> <strong>User Name:</strong>  {user.userName}</PropSpan>
+               <PropSpan><strong>Session Time Out:</strong> {user.sessionTimeOut}</PropSpan>
+               <PropSpan><strong>Created Data:</strong> {user.createdDate}</PropSpan>
+               <PropSpan><strong>Premmisions:</strong></PropSpan>
+               <SubsListContainer maxHeight={'130px'}>
                   <ul>
                      {user.premissions.map((premission) => {
                         return <li key={premission} >{premission}</li>
@@ -36,3 +37,8 @@ export default function UserItem({ user, onDelete, index }) {
       </CardWrapper>
    )
 }
+
+
+const PropSpan = styled.span`
+    font-size: 14px;
+`

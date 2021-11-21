@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { loaderStatusAction } from '../loader/actions';
 import { options } from "../../utils/http";
+// import history from '../../hooks/router.history';
+
 const AUTH_ACTIONS_TYPES = {
    AUTH_REGISTER_START: 'AUTH_REGISTER_START',
    AUTH_USER_START: 'AUTH_USER_START',
@@ -12,7 +14,6 @@ const AUTH_ACTIONS_TYPES = {
 export function apiMiddeleware({ dispatch }) {
    return function (next) {
       return function (action) {
-         // console.log(action)
 
          if (AUTH_ACTIONS_TYPES[action.type]) {
             const { successAction, errorAction, redirect, globalLoader } = action
@@ -20,6 +21,7 @@ export function apiMiddeleware({ dispatch }) {
             if (globalLoader) {
                dispatch(loaderStatusAction(true))
             }
+            console.log(action.metaData)
 
             axios({
                ...action.metaData,
@@ -35,6 +37,7 @@ export function apiMiddeleware({ dispatch }) {
 
                dispatch({ type: successAction, payload: result.data })
             }).catch((error) => {
+
                dispatch({ type: errorAction, payload: error })
 
                if (globalLoader) {

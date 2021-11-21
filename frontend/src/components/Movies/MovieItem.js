@@ -9,14 +9,15 @@ import NavigateButton from '../components-utils/NavigateButton'
 
 export default function MovieItem({ movie, onDelete, index, currentUser, match }) {
    console.log(match)
+   if (!movie) return null
    return (
       <CardWrapper key={movie.movieName}>
-         <Card width="300px" height="270px" >
+         <Card width="300px" height="320px" >
             <CardHeader>
-               <h5 className="card-title">{movie.movieName}</h5>
-               <h6>  {movie.premiered}</h6>
+               <h6 className="card-title">{movie.movieName}</h6>
+               <hr />
             </CardHeader>
-            <CardBody>
+            <CardBody height="70%">
                <div style={{ display: 'flex' }}>
                   <div style={{ width: '50%' }}>
                      <img src={movie.imageUrl} width="100" height="120" />
@@ -30,10 +31,12 @@ export default function MovieItem({ movie, onDelete, index, currentUser, match }
                                  return <li><MyLink key={sub._id + 1} content={sub.memberName} to={`/main/subscriptions/${sub._id}`} click={currentUser.premissions.includes('view members')} /> </li>
                               })}
                            </ul>
-                        </SubsListContainer> : <p>No subscribers yet</p>}
+                        </SubsListContainer> : <p style={{ fontSize: '13px' }}>No subscribers yet</p>}
                   </div>
                </div>
-               <h6 className="card-subtitle mt-2  text-muted">Genres: {movie.genres.map((gen, i) => i === movie.genres.length - 1 ? gen : gen + ', ')}</h6>
+               <p style={{ fontSize: '13px' }}>  {movie.premiered}</p>
+
+               <p style={{ fontSize: '14px' }} className="mb-3 text-muted">Genres: {movie.genres.map((gen, i) => i === movie.genres.length - 1 ? gen : gen + ', ')}</p>
             </CardBody>
             <CardFooter>
                {currentUser.premissions.includes('edit movies') && <NavigateButton content={editIcon} url={`/main/movies/edit_movie/${index}`} />}

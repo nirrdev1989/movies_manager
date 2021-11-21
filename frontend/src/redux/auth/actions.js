@@ -1,7 +1,7 @@
-import Axios from 'axios'
 import history from '../../hooks/router.history'
-import { httpCall } from '../../utils/http'
 import { AUTH_ACTIONS_TYPES } from './actions.types'
+// import Axios from 'axios'
+// import { httpCall } from '../../utils/http'
 
 
 

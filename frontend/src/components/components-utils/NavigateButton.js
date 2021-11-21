@@ -1,6 +1,5 @@
 import React from 'react'
 import { withRouter } from 'react-router'
-import { Link, Switch, Route, useRouteMatch } from 'react-router-dom'
 import { ButtonS } from '../../styles/Button'
 
 function NavigateButton({ url, content, bg, history, styles, ...rest }) {

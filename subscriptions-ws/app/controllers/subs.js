@@ -11,12 +11,12 @@ exports.addSub = async function (request, response, next) {
       const foundSub = await SubscriptionModel.findOne({ memberId: memberId })
       console.log(foundSub)
       if (foundSub) {
-         foundSub.movies.push({ movieId: movieId, subDate: dateWatched })
+         foundSub.movies.push({ movieId: movieId, dateWatched: dateWatched })
          await foundSub.save()
       } else {
          const newSub = new SubscriptionModel({
             memberId: memberId,
-            movies: [{ movieId: movieId, subDate: dateWatched }]
+            movies: [{ movieId: movieId, dateWatched: dateWatched }]
          })
 
          await newSub.save()

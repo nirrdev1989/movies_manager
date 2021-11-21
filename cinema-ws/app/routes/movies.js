@@ -11,7 +11,7 @@ router.post('/add_movie', [
    validators.stringProperty('movieName'),
    validators.stringProperty('imageUrl'),
    validators.stringProperty('premiered'),
-   validators.stringProperty('genres'),
+   validators.arrayProperty('genres'),
 
 ], validate, authUser, createMovie)
 

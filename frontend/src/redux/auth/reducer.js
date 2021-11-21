@@ -1,4 +1,5 @@
 import { AUTH_ACTIONS_TYPES } from "./actions.types";
+// import history from "../../hooks/router.history";
 
 const INITIAL_STATE = {
    currentUser: null,
@@ -38,6 +39,7 @@ export default function authReducer(state = INITIAL_STATE, action) {
             currentUser: action.payload
          }
       case AUTH_ACTIONS_TYPES.AUTH_USER_FAIL:
+         // history.push('/home')
          return {
             currentUser: null,
             isAuth: false

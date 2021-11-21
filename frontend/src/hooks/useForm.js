@@ -7,7 +7,6 @@ export default function useForm(initialState, callback) {
    function onSubmit(event) {
       event.preventDefault()
 
-      // console.log(state)
       callback(state)
    }
 
